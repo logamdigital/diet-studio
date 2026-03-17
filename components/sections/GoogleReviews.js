@@ -48,6 +48,7 @@ function ReviewCard({ review, index }) {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2.5">
           {review.photo ? (
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={review.photo}
               alt={review.name}
