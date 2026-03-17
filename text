@@ -1,0 +1,557 @@
+ Conversation compacted (ctrl+o for history)
+
+  ⎿  Read data/reviews.js (78 lines)
+  ⎿  Read scripts/fetch-reviews.mjs (158 lines)
+  ⎿  Read package.json (30 lines)
+  ⎿  Read components/sections/GoogleReviews.js (131 lines)
+  ⎿  Read .env.local.example (15 lines)
+
+⏺ Task "Research VSL diet landing pages" completed in background
+
+⏺ Task "Scrape Google reviews for Diet Studio" completed in background
+
+⏺ Let me make the pending changes in parallel — fix GoogleReviews.js and update the fetch script to scroll more aggressively for all 36
+  reviews.                                                                                 
+
+⏺ Update(components/sections/GoogleReviews.js)                                                                                          
+  ⎿  Added 12 lines, removed 3 lines                                                       
+      47      <div className="w-72 shrink-0 bg-white rounded-2xl p-5 border border-beige-200 shadow-sm mx-3 flex flex-col               
+          gap-3">                                                                                                                       
+      48        <div className="flex items-start justify-between">                                                                      
+      49          <div className="flex items-center gap-2.5">                                                                           
+      50 -          <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0                 
+         -${AVATAR_COLORS[index % AVATAR_COLORS.length]}`}>                                                                             
+      51 -            {initials(review.name)}                                                                                         
+      52 -          </div>                                                                                                       
+      50 +          {review.photo ? (                                                                                            
+      51 +            <img                                                                                                       
+      52 +              src={review.photo}                                                                                       
+      53 +              alt={review.name}                                                                                        
+      54 +              className="w-9 h-9 rounded-full shrink-0 object-cover"                                                   
+      55 +              referrerPolicy="no-referrer"                                                                             
+      56 +            />                                                                                                         
+      57 +          ) : (                                                                                                        
+      58 +            <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0          
+         +${AVATAR_COLORS[index % AVATAR_COLORS.length]}`}>                                                                      
+      59 +              {initials(review.name)}                                                                                  
+      60 +            </div>                                                                                                     
+      61 +          )}                                                                                                           
+      62            <div>
+      63              <p className="font-semibold text-brown-900 text-sm leading-tight">{review.name}</p>
+      64              <p className="text-xs text-brown-400">{review.time}</p>
+
+⏺ Update(components/sections/GoogleReviews.js)           
+  ⎿  Error editing file                                                                    
+                                                         
+⏺ Read 1 file (ctrl+o to expand)                                                                                                        
+                                                                                           
+⏺ Update(components/sections/GoogleReviews.js)                                                                                          
+  ⎿  Added 1 line, removed 1 line                                                                                                       
+      67          <GoogleG size={18} />                                                                                                 
+      68        </div>                                                                                                                  
+      69        <StarRow count={review.rating} />                                                                                       
+      70 -      <p className="text-brown-700 text-sm leading-relaxed font-light line-clamp-4">{review.text}</p>                         
+      70 +      <p className="text-brown-700 text-sm leading-relaxed font-light">{review.text}</p>                                      
+      71      </div>                                                                                                                  
+      72    );
+      73  }
+
+⏺ Now update the card width to be a bit wider since full text will show, and update the fetch script to scroll aggressively for all 36
+  reviews:                                                                                 
+
+⏺ Update(components/sections/GoogleReviews.js)                                                                                          
+  ⎿  Added 1 line, removed 1 line                                                          
+      44                                                                                                                                
+      45  function ReviewCard({ review, index }) {                                                                                      
+      46    return (                                                                                                             
+      47 -    <div className="w-72 shrink-0 bg-white rounded-2xl p-5 border border-beige-200 shadow-sm mx-3 flex flex-col gap-3">       
+      47 +    <div className="w-80 shrink-0 bg-white rounded-2xl p-5 border border-beige-200 shadow-sm mx-3 flex flex-col gap-3">     
+      48        <div className="flex items-start justify-between">                                                                      
+      49          <div className="flex items-center gap-2.5">                                                                         
+      50            {review.photo ? (
+
+⏺ Now update the fetch script to scroll much more aggressively to load all 36 reviews:
+                                                                                           
+⏺ Update(scripts/fetch-reviews.mjs)                      
+  ⎿  Added 22 lines, removed 5 lines                                                                                                    
+      60        if (reviewBtn) reviewBtn.click();                                                                                
+      61      });                                                                                                                       
+      62      await new Promise(r => setTimeout(r, 3000));                                                                            
+      63 -    // Scroll to load more                                                                                                    
+      64 -    for (let i = 0; i < 8; i++) {                                                                                           
+      63 +                                                                                                                       
+      64 +    // Scroll aggressively to load all reviews — keep scrolling until count stabilises                                 
+      65 +    let prevCount = 0;                                                                                                 
+      66 +    let stableRounds = 0;                                                                                              
+      67 +    for (let i = 0; i < 60; i++) {                                                                                     
+      68        await page.evaluate(() => {
+      69          const scrollable = document.querySelector('[role="main"]') || document.querySelector('.m6QErb');
+      70 -        if (scrollable) scrollable.scrollBy(0, 600);                                                                   
+      71 -        else window.scrollBy(0, 600);                                                                                  
+      70 +        if (scrollable) scrollable.scrollBy(0, 800);                                                                   
+      71 +        else window.scrollBy(0, 800);                                                                                  
+      72        });
+      73 -      await new Promise(r => setTimeout(r, 700));                                                                      
+      73 +      await new Promise(r => setTimeout(r, 600));                                                                      
+      74 +                                                                                                                       
+      75 +      // Check how many review blocks are loaded                                                                       
+      76 +      const count = await page.evaluate(() =>                                                                          
+      77 +        document.querySelectorAll('.jftiEf, .GHT2ce, [data-review-id]').length                                         
+      78 +      );                                                                                                               
+      79 +      console.log(`  Scroll ${i + 1}: ${count} reviews loaded`);                                                       
+      80 +                                                                                                                       
+      81 +      if (count === prevCount) {                                                                                       
+      82 +        stableRounds++;                                                                                                
+      83 +        if (stableRounds >= 4) break; // stop if count hasn't changed for 4 rounds                                     
+      84 +      } else {                                                                                                         
+      85 +        stableRounds = 0;                                                                                              
+      86 +      }                                                                                                                
+      87 +      prevCount = count;                                                                                               
+      88      }
+      89    } catch {}
+      90  }
+
+⏺ Now run the fetch script to get all 36 reviews:         
+                                                                                           
+⏺ Bash(npm run fetch-reviews 2>&1)                        
+  ⎿  > diet-studio@0.1.0 fetch-reviews                                                                                                  
+     > node scripts/fetch-reviews.mjs                                                                                                   
+     … +21 lines (ctrl+o to expand)                                                                                                     
+  ⎿  (timeout 2m)                                                                                                                       
+                                                                                                                                        
+⏺ The script sees 105 elements in the DOM but only extracts 10 — the selectors for name and text inside each block are stale (Google    
+  changes class names). Let me also click "More" to expand truncated reviews and use more resilient selectors:                          
+                                                                                                                                        
+⏺ Update(scripts/fetch-reviews.mjs)                                                                                                     
+  ⎿  Added 69 lines, removed 49 lines                                                                                                   
+       89    } catch {}                                                                                                                 
+       90  }                                                                                                                            
+       91                                                                                                                               
+       92 +// ── Expand all truncated reviews ("More" buttons) ──                                                                       
+       93 +console.log('Expanding truncated reviews...');                                                                             
+       94 +try {                                                                                                                 
+       95 +  let moreCount = 0;                                                                                                  
+       96 +  for (let attempt = 0; attempt < 5; attempt++) {                                                                     
+       97 +    const clicked = await page.evaluate(() => {                                                                       
+       98 +      const buttons = [...document.querySelectorAll('button')];                                                       
+       99 +      const moreButtons = buttons.filter(b => {                                                                       
+      100 +        const t = b.textContent.trim().toLowerCase();                                                                 
+      101 +        return t === 'more' || t === 'see more';                                                                      
+      102 +      });                                                                                                             
+      103 +      moreButtons.forEach(b => b.click());                                                                            
+      104 +      return moreButtons.length;                                                                                      
+      105 +    });                                                                                                               
+      106 +    if (clicked === 0) break;                                                                                         
+      107 +    moreCount += clicked;                                                                                             
+      108 +    await new Promise(r => setTimeout(r, 800));                                                                       
+      109 +  }                                                                                                                   
+      110 +  console.log(`Expanded ${moreCount} truncated reviews`);                                                             
+      111 +} catch {}                                                                                                            
+      112 +                                                                                                                      
+      113  console.log('Extracting reviews...');
+      114  
+      115  const reviews = await page.evaluate(() => {
+      116    const results = [];
+      117  
+      118 -  // ── Google Maps review selectors ──                                                                               
+      119 -  const reviewSelectors = [                                                                                           
+      120 -    '.jftiEf',      // Maps review container                                                                          
+      121 -    '.GHT2ce',                                                                                                        
+      122 -    '[data-review-id]',                                                                                               
+      123 -    '.WMbnJf',                                                                                                        
+      124 -  ];                                                                                                                  
+      118 +  // ── Google Maps review containers ──                                                                              
+      119 +  const containerSelectors = ['.jftiEf', '.GHT2ce', '[data-review-id]', '.WMbnJf'];                                   
+      120  
+      121 -  for (const sel of reviewSelectors) {                                                                                
+      122 -    document.querySelectorAll(sel).forEach(block => {                                                                 
+      123 -      const name   = block.querySelector('.d4r55, .x3AX1-LfntMc-header-title-title span')?.textContent?.trim();       
+      124 -      const text   = block.querySelector('.wiI7pd, .MyEned span')?.textContent?.trim();                               
+      125 -      const time   = block.querySelector('.rsqaWe, .dehysf')?.textContent?.trim();                                    
+      126 -      const label  = block.querySelector('[aria-label*="star"], [aria-label*="Star"]')?.getAttribute('aria-label') || 
+          - '';                                                                                                                  
+      127 -      const rating = parseInt(label.match(/(\d)/)?.[1]) || 5;                                                         
+      128 -      const photo  = block.querySelector('.NBa7we img, .Oa1nbd img,                                                   
+          -img[src*="googleusercontent"]')?.getAttribute('src') || null;                                                         
+      129 -      if (name && text) results.push({ name, rating, time: time || 'recently', text, photo });                        
+      121 +  for (const sel of containerSelectors) {                                                                             
+      122 +    const blocks = [...document.querySelectorAll(sel)];                                                               
+      123 +    if (!blocks.length) continue;                                                                                     
+      124 +                                                                                                                      
+      125 +    blocks.forEach(block => {                                                                                         
+      126 +      // Name — try many known class names                                                                            
+      127 +      const name = (                                                                                                  
+      128 +        block.querySelector('.d4r55')?.textContent ||                                                                 
+      129 +        block.querySelector('.x3AX1-LfntMc-header-title-title span')?.textContent ||                                  
+      130 +        block.querySelector('[class*="author"]')?.textContent ||                                                      
+      131 +        block.querySelector('[class*="name"]')?.textContent                                                           
+      132 +      )?.trim();                                                                                                      
+      133 +                                                                                                                      
+      134 +      // Review text — try many known class names                                                                     
+      135 +      const text = (                                                                                                  
+      136 +        block.querySelector('.wiI7pd')?.textContent ||                                                                
+      137 +        block.querySelector('.MyEned span')?.textContent ||                                                           
+      138 +        block.querySelector('[data-expandable-section] span')?.textContent ||                                         
+      139 +        block.querySelector('.Jtu6Td')?.textContent ||                                                                
+      140 +        [...block.querySelectorAll('span')]                                                                           
+      141 +          .filter(s => s.textContent.trim().length > 20 && !s.children.length)                                        
+      142 +          .sort((a, b) => b.textContent.length - a.textContent.length)[0]?.textContent                                
+      143 +      )?.trim();                                                                                                      
+      144 +                                                                                                                      
+      145 +      // Time                                                                                                         
+      146 +      const time = (                                                                                                  
+      147 +        block.querySelector('.rsqaWe')?.textContent ||                                                                
+      148 +        block.querySelector('.dehysf')?.textContent                                                                   
+      149 +      )?.trim() || 'recently';                                                                                        
+      150 +                                                                                                                      
+      151 +      // Rating                                                                                                       
+      152 +      const label = block.querySelector('[aria-label*="star"], [aria-label*="Star"]')?.getAttribute('aria-label') ||  
+          +'';                                                                                                                   
+      153 +      const rating = parseInt(label.match(/(\d+)/)?.[1]) || 5;                                                        
+      154 +                                                                                                                      
+      155 +      // Photo                                                                                                        
+      156 +      const photo = (                                                                                                 
+      157 +        block.querySelector('.NBa7we img')?.getAttribute('src') ||                                                    
+      158 +        block.querySelector('.Oa1nbd img')?.getAttribute('src') ||                                                    
+      159 +        block.querySelector('img[src*="googleusercontent"]')?.getAttribute('src') ||                                  
+      160 +        block.querySelector('img')?.getAttribute('src')                                                               
+      161 +      ) || null;                                                                                                      
+      162 +                                                                                                                      
+      163 +      if (name && text && text.length > 10) {                                                                         
+      164 +        results.push({ name, rating, time, text, photo });                                                            
+      165 +      }                                                                                                               
+      166      });
+      167 +                                                                                                                      
+      168      if (results.length) break;
+      169    }
+      170  
+      171 -  // ── Google Search Knowledge Panel review selectors ──                                                             
+      172 -  if (!results.length) {                                                                                              
+      173 -    const searchSelectors = [                                                                                         
+      174 -      '.gws-localreviews__google-review',                                                                             
+      175 -      '[data-attrid="kc:/collection/knowledge_panels/has_reviews:review"]',                                           
+      176 -      '.review-snippet',                                                                                              
+      177 -      '.relnub',                                                                                                      
+      178 -      '.PiXFyc',                                                                                                      
+      179 -    ];                                                                                                                
+      180 -    for (const sel of searchSelectors) {                                                                              
+      181 -      document.querySelectorAll(sel).forEach(block => {                                                               
+      182 -        const name   = block.querySelector('.Jtu6Td, .ibc4Ac, [class*="author"]')?.textContent?.trim();               
+      183 -        const text   = block.querySelector('.Uroaid, .review-text, [class*="text"]')?.textContent?.trim();            
+      184 -        const time   = block.querySelector('.dehysf, [class*="date"]')?.textContent?.trim();                          
+      185 -        const stars  = block.querySelectorAll('.z3HNkc[aria-label]').length ||                                        
+      186 -                       block.querySelectorAll('[class*="star"]').length || 5;                                         
+      187 -        if (name && text) results.push({ name, rating: stars, time: time || 'recently', text });                      
+      188 -      });                                                                                                             
+      189 -      if (results.length) break;                                                                                      
+      190 -    }                                                                                                                 
+      191 -  }                                                                                                                   
+      192 -                                                                                                                      
+      193 -  // ── Broadest fallback — any element with enough review-like content ──                                            
+      194 -  if (!results.length) {                                                                                              
+      195 -    const allText = [...document.querySelectorAll('[class*="review"] span, [class*="Review"] span')];                 
+      196 -    allText                                                                                                           
+      197 -      .filter(el => el.textContent.trim().length > 30 && !el.children.length)                                         
+      198 -      .slice(0, 20)                                                                                                   
+      199 -      .forEach((el, i) => {                                                                                           
+      200 -        if (i % 2 === 0) results.push({ name: 'Google Reviewer', rating: 5, time: 'recently', text:                   
+          -el.textContent.trim() });                                                                                             
+      201 -      });                                                                                                             
+      202 -  }                                                                                                                   
+      203 -                                                                                                                      
+      171    return [...new Map(results.map(r => [r.text, r])).values()]; // deduplicate
+      172  });
+      173  
+
+⏺ Bash(npm run fetch-reviews 2>&1)                         
+  ⎿  > diet-studio@0.1.0 fetch-reviews                                                                                                  
+     > node scripts/fetch-reviews.mjs                                                                                                   
+     … +23 lines (ctrl+o to expand)                                                                                                     
+  ⎿  (timeout 2m)                                                                                                                       
+                                                                                                                                        
+⏺ The script finds 105 elements but only 10 match both name+text selectors — Google's class names have changed. Let me add a debug dump 
+  to see the actual HTML structure of the blocks:                                                                                       
+                                                                                                                                        
+⏺ Update(scripts/fetch-reviews.mjs)                                                                                                     
+  ⎿  Added 7 lines                                                                                                                      
+      110    console.log(`Expanded ${moreCount} truncated reviews`);                                                                    
+      111  } catch {}                                                                                                                   
+      112                                                                                                                               
+      113 +// ── Debug: dump first block's structure ──                                                                                 
+      114 +const debugHtml = await page.evaluate(() => {                                                                              
+      115 +  const block = document.querySelector('.jftiEf, .GHT2ce, [data-review-id]');                                         
+      116 +  return block ? block.innerHTML.substring(0, 3000) : 'NO BLOCK FOUND';                                               
+      117 +});                                                                                                                   
+      118 +console.log('\n--- DEBUG: first review block HTML ---\n', debugHtml.substring(0, 2000), '\n---\n');                   
+      119 +                                                                                                                      
+      120  console.log('Extracting reviews...');
+      121  
+      122  const reviews = await page.evaluate(() => {
+
+⏺ Bash(npm run fetch-reviews 2>&1 | head -60)              
+  ⎿  > diet-studio@0.1.0 fetch-reviews                                                                
+     > node scripts/fetch-reviews.mjs                                                                     
+     … +30 lines (ctrl+o to expand)                                                                                                     
+  ⎿  (timeout 2m)                                                                                      
+                                                                                                                                        
+⏺ The debug HTML is very helpful. I can see the actual structure:                                                                       
+  - Outer container: div[data-review-id] with jsaction="mouseover:...review.in"            
+  - Name: .d4r55 ✓ (already there)                                                                                                      
+  - But the counter 105 = outer divs + inner buttons + .GHT2ce sub-elements all mixed together                                          
+                                                                                                                                        
+  The real review containers are div[jsaction*="review.in"] — exactly one per review. Let me fix the selectors:                         
+                                                                                                                                        
+⏺ Update(scripts/fetch-reviews.mjs)                                                                                                     
+  ⎿  Added 1 line, removed 1 line                                                                                                       
+      74                                                                                                                                
+      75        // Check how many review blocks are loaded                                                                              
+      76        const count = await page.evaluate(() =>                                                                          
+      77 -        document.querySelectorAll('.jftiEf, .GHT2ce, [data-review-id]').length                                                
+      77 +        document.querySelectorAll('div[jsaction*="review.in"]').length                                                      
+      78        );
+      79        console.log(`  Scroll ${i + 1}: ${count} reviews loaded`);
+      80  
+
+⏺ Update(scripts/fetch-reviews.mjs)                         
+  ⎿  Added 48 lines, removed 45 lines                                                      
+      122  const reviews = await page.evaluate(() => {                                                                           
+      123    const results = [];                                                                                                        
+      124                                                                                                                        
+      125 -  // ── Google Maps review containers ──                                                                                     
+      126 -  const containerSelectors = ['.jftiEf', '.GHT2ce', '[data-review-id]', '.WMbnJf'];                                        
+      125 +  // Exact container: one per review, matches the outer div with review.in jsaction                                        
+      126 +  const blocks = [                                                                                                    
+      127 +    ...document.querySelectorAll('div[jsaction*="review.in"]'),                                                       
+      128 +    ...document.querySelectorAll('div[data-review-id]:not(button)'),                                                  
+      129 +  ];                                                                                                                  
+      130  
+      131 -  for (const sel of containerSelectors) {                                                                             
+      132 -    const blocks = [...document.querySelectorAll(sel)];                                                               
+      133 -    if (!blocks.length) continue;                                                                                     
+      131 +  // Deduplicate blocks by data-review-id                                                                             
+      132 +  const seen = new Set();                                                                                             
+      133 +  const uniqueBlocks = blocks.filter(b => {                                                                           
+      134 +    const id = b.getAttribute('data-review-id') || b.getAttribute('jsaction');                                        
+      135 +    if (seen.has(id)) return false;                                                                                   
+      136 +    seen.add(id);                                                                                                     
+      137 +    return true;                                                                                                      
+      138 +  });                                                                                                                 
+      139  
+      140 -    blocks.forEach(block => {                                                                                         
+      141 -      // Name — try many known class names                                                                            
+      142 -      const name = (                                                                                                  
+      143 -        block.querySelector('.d4r55')?.textContent ||                                                                 
+      144 -        block.querySelector('.x3AX1-LfntMc-header-title-title span')?.textContent ||                                  
+      145 -        block.querySelector('[class*="author"]')?.textContent ||                                                      
+      146 -        block.querySelector('[class*="name"]')?.textContent                                                           
+      147 -      )?.trim();                                                                                                      
+      140 +  uniqueBlocks.forEach(block => {                                                                                     
+      141 +    // Name                                                                                                           
+      142 +    const name = (                                                                                                    
+      143 +      block.querySelector('.d4r55')?.textContent ||                                                                   
+      144 +      block.querySelector('.x3AX1-LfntMc-header-title-title span')?.textContent ||                                    
+      145 +      block.querySelector('.fontTitleMedium')?.textContent                                                            
+      146 +    )?.trim();                                                                                                        
+      147  
+      148 -      // Review text — try many known class names                                                                     
+      149 -      const text = (                                                                                                  
+      150 -        block.querySelector('.wiI7pd')?.textContent ||                                                                
+      151 -        block.querySelector('.MyEned span')?.textContent ||                                                           
+      152 -        block.querySelector('[data-expandable-section] span')?.textContent ||                                         
+      153 -        block.querySelector('.Jtu6Td')?.textContent ||                                                                
+      154 -        [...block.querySelectorAll('span')]                                                                           
+      155 -          .filter(s => s.textContent.trim().length > 20 && !s.children.length)                                        
+      156 -          .sort((a, b) => b.textContent.length - a.textContent.length)[0]?.textContent                                
+      157 -      )?.trim();                                                                                                      
+      148 +    // Review text — wiI7pd is the known text container; also try DU9Pgb, or any long leaf span                       
+      149 +    const text = (                                                                                                    
+      150 +      block.querySelector('.wiI7pd')?.textContent ||                                                                  
+      151 +      block.querySelector('.MyEned')?.textContent ||                                                                  
+      152 +      block.querySelector('.DU9Pgb')?.textContent ||                                                                  
+      153 +      block.querySelector('[class*="review-text"]')?.textContent ||                                                   
+      154 +      [...block.querySelectorAll('span')]                                                                             
+      155 +        .filter(s => !s.children.length && s.textContent.trim().length > 30)                                          
+      156 +        .sort((a, b) => b.textContent.length - a.textContent.length)[0]?.textContent                                  
+      157 +    )?.trim();                                                                                                        
+      158  
+      159 -      // Time                                                                                                         
+      160 -      const time = (                                                                                                  
+      161 -        block.querySelector('.rsqaWe')?.textContent ||                                                                
+      162 -        block.querySelector('.dehysf')?.textContent                                                                   
+      163 -      )?.trim() || 'recently';                                                                                        
+      159 +    // Time                                                                                                           
+      160 +    const time = (                                                                                                    
+      161 +      block.querySelector('.rsqaWe')?.textContent ||                                                                  
+      162 +      block.querySelector('.dehysf')?.textContent                                                                     
+      163 +    )?.trim() || 'recently';                                                                                          
+      164  
+      165 -      // Rating                                                                                                       
+      166 -      const label = block.querySelector('[aria-label*="                                                               
+          -star"], [aria-label*="Star"]')?.getAttribute('aria-label') || '';                                                     
+      167 -      const rating = parseInt(label.match(/(\d+)/)?.[1]) || 5;                                                        
+      165 +    // Rating from aria-label e.g. "5 stars"                                                                          
+      166 +    const label = block.querySelector('[aria-label*="stars"], [aria-label*="                                          
+          +star"], [aria-label*="Star"]')?.getAttribute('aria-label') || '';                                                     
+      167 +    const rating = parseInt(label.match(/(\d+)/)?.[1]) || 5;                                                          
+      168  
+      169 -      // Photo                                                                                                        
+      170 -      const photo = (                                                                                                 
+      171 -        block.querySelector('.NBa7we img')?.getAttribute('src') ||                                                    
+      172 -        block.querySelector('.Oa1nbd img')?.getAttribute('src') ||                                                    
+      173 -        block.querySelector('img[src*="googleusercontent"]')?.getAttribute('src') ||                                  
+      174 -        block.querySelector('img')?.getAttribute('src')                                                               
+      175 -      ) || null;                                                                                                      
+      169 +    // Photo                                                                                                          
+      170 +    const photo = (                                                                                                   
+      171 +      block.querySelector('.NBa7we')?.getAttribute('src') ||                                                          
+      172 +      block.querySelector('img.NBa7we')?.getAttribute('src') ||                                                       
+      173 +      block.querySelector('img[src*="googleusercontent"]')?.getAttribute('src')                                       
+      174 +    ) || null;                                                                                                        
+      175  
+      176 -      if (name && text && text.length > 10) {                                                                         
+      177 -        results.push({ name, rating, time, text, photo });                                                            
+      178 -      }                                                                                                               
+      179 -    });                                                                                                               
+      176 +    if (name && text && text.length > 10) {                                                                           
+      177 +      results.push({ name, rating, time, text, photo });                                                              
+      178 +    }                                                                                                                 
+      179 +  });                                                                                                                 
+      180  
+      181 -    if (results.length) break;                                                                                        
+      182 -  }                                                                                                                   
+      183 -                                                                                                                      
+      181    return [...new Map(results.map(r => [r.text, r])).values()]; // deduplicate
+      182  });
+      183  
+
+⏺ Bash(npm run fetch-reviews 2>&1)                          
+  ⎿  > diet-studio@0.1.0 fetch-reviews                                                                                                  
+     > node scripts/fetch-reviews.mjs                                                                                                   
+     … +30 lines (ctrl+o to expand)                                                                                                     
+  ⎿  (timeout 2m)                                                                          
+                                                                                                                                        
+⏺ Now only 10 reviews are loading — scrolling isn't working because the script isn't clicking the business first (Maps search shows a   
+  list, not a single business). Let me fix the full Maps navigation flow:                                                               
+                                                                                                                                        
+⏺ Read 1 file (ctrl+o to expand)                                                                                                        
+                                                                                                                                        
+⏺ Now I see the real issue: the Maps search URL shows a list, not a business page, so the Reviews tab click isn't targeting the right   
+  element and scrolling hits the wrong panel. Let me rewrite the Maps navigation to use the kgmid directly and scroll the review panel  
+  properly:                                                                                                                             
+                                                                                                                                        
+⏺ Update(scripts/fetch-reviews.mjs)                                                                                                     
+  ⎿  Added 64 lines, removed 37 lines                                                                                                   
+       44    console.log('After click URL:', page.url());                                                                               
+       45  } catch {}                                                                                                                   
+       46                                                                                                                               
+       47 -// ── Try navigating to Maps reviews directly using the kgmid from the URL ──                                                
+       47 +// ── Navigate directly to the business on Google Maps using kgmid ──                                                      
+       48  const kgmidMatch = currentURL.match(/kgmid=([^&]+)/);
+       49 -if (kgmidMatch) {                                                                                                     
+       50 -  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=The+Diet+Studio+Sushant+Thakur`;                   
+       51 -  console.log('Trying Google Maps URL...');                                                                           
+       52 -  await page.goto(mapsUrl, { waitUntil: 'networkidle2', timeout: 30000 });                                            
+       53 -  await new Promise(r => setTimeout(r, 5000));                                                                        
+       49 +const kgmid = kgmidMatch ? kgmidMatch[1] : '/g/11m6k7xbb1';                                                           
+       50  
+       51 -  // Click Reviews tab in Maps                                                                                        
+       52 -  try {                                                                                                               
+       53 -    await page.evaluate(() => {                                                                                       
+       54 -      const buttons = [...document.querySelectorAll('button, [role="tab"]')];                                         
+       55 -      const reviewBtn = buttons.find(b => /^review/i.test(b.textContent.trim()));                                     
+       56 -      if (reviewBtn) reviewBtn.click();                                                                               
+       57 -    });                                                                                                               
+       58 -    await new Promise(r => setTimeout(r, 3000));                                                                      
+       51 +const mapsUrl = `https://www.google.com/maps?kgmid=${kgmid}`;                                                         
+       52 +console.log('Navigating to Maps business page:', mapsUrl);                                                            
+       53 +await page.goto(mapsUrl, { waitUntil: 'networkidle2', timeout: 30000 });                                              
+       54 +await new Promise(r => setTimeout(r, 5000));                                                                          
+       55 +console.log('Maps URL:', page.url());                                                                                 
+       56  
+       57 -    // Scroll aggressively to load all reviews — keep scrolling until count stabilises                                
+       58 -    let prevCount = 0;                                                                                                
+       59 -    let stableRounds = 0;                                                                                             
+       60 -    for (let i = 0; i < 60; i++) {                                                                                    
+       61 -      await page.evaluate(() => {                                                                                     
+       62 -        const scrollable = document.querySelector('[role="main"]') || document.querySelector('.m6QErb');              
+       63 -        if (scrollable) scrollable.scrollBy(0, 800);                                                                  
+       64 -        else window.scrollBy(0, 800);                                                                                 
+       65 -      });                                                                                                             
+       66 -      await new Promise(r => setTimeout(r, 600));                                                                     
+       57 +// Click the Reviews tab                                                                                              
+       58 +try {                                                                                                                 
+       59 +  const reviewClicked = await page.evaluate(() => {                                                                   
+       60 +    const tabs = [...document.querySelectorAll('button[role="tab"], [role="tab"], button')];                          
+       61 +    const reviewTab = tabs.find(b => /^reviews?$/i.test(b.textContent.trim()));                                       
+       62 +    if (reviewTab) { reviewTab.click(); return true; }                                                                
+       63 +    return false;                                                                                                     
+       64 +  });                                                                                                                 
+       65 +  console.log('Reviews tab clicked:', reviewClicked);                                                                 
+       66 +  await new Promise(r => setTimeout(r, 3000));                                                                        
+       67 +} catch {}                                                                                                            
+       68  
+       69 -      // Check how many review blocks are loaded                                                                      
+       70 -      const count = await page.evaluate(() =>                                                                         
+       71 -        document.querySelectorAll('div[jsaction*="review.in"]').length                                                
+       72 -      );                                                                                                              
+       73 -      console.log(`  Scroll ${i + 1}: ${count} reviews loaded`);                                                      
+       74 -                                                                                                                      
+       75 -      if (count === prevCount) {                                                                                      
+       76 -        stableRounds++;                                                                                               
+       77 -        if (stableRounds >= 4) break; // stop if count hasn't changed for 4 rounds                                    
+       78 -      } else {                                                                                                        
+       79 -        stableRounds = 0;                                                                                             
+       69 +// Scroll the reviews panel — find the scrollable container that holds reviews                                        
+       70 +let prevCount = 0;                                                                                                    
+       71 +let stableRounds = 0;                                                                                                 
+       72 +for (let i = 0; i < 80; i++) {                                                                                        
+       73 +  await page.evaluate(() => {                                                                                         
+       74 +    // Find the innermost scrollable div that contains review blocks                                                  
+       75 +    const reviewBlock = document.querySelector('div[jsaction*="review.in"]');                                         
+       76 +    if (reviewBlock) {                                                                                                
+       77 +      // Walk up to find scrollable ancestor                                                                          
+       78 +      let el = reviewBlock.parentElement;                                                                             
+       79 +      while (el && el !== document.body) {                                                                            
+       80 +        if (el.scrollHeight > el.clientHeight + 10) {                                                                 
+       81 +          el.scrollBy(0, 1000);                                                                                       
+       82 +          return;                                                                                                     
+       83 +        }                                                                                                             
+       84 +        el = el.parentElement;                                                                                        
+       85        }
+       86 -      prevCount = count;                                                                                              
+       86      }
+       87 -  } catch {}                                                                                                          
+       87 +    // Fallbacks                                                                                                      
+       88 +    const containers = [                                                                                              
+       89 +      document.querySelector('.m6QErb[tabindex]'),                                                                    
+       90 +      document.querySelector('.m6QErb'),                                                                              
+       91 +      document.querySelector('.DxyBCb'),                                                                              
+       92 +      document.querySelector('[role="main"]'),                                                                        
+       93 +    ];                                                                                                                
+       94 +    for (const c of containers) {                                                                                     
+       95 +      if (c && c.scrollHeight > c.clientHeight + 10) {                                                                
+       96 +        c.scrollBy(0, 1000);                                                                                          
+       97 +        return;                                                                                                       
+       98 +      }                                                                                                               
+       99 +    }                                                                                                                 
+      100 +    window.scrollBy(0, 1000);                                                                                         
+      101 +  });                                                                                                                 
+      102 +  await new Promise(r => setTimeout(r, 700));                                                                         
+      103 +                                                                                                                      
+      104 +  const count = await page.evaluate(() =>                                                                             
+      105 +    document.querySelectorAll('div[jsaction*="review.in"]').length                                                    
+      106 +  );                                                                                                                  
+      107 +  if (i % 5 === 0) console.log(`  Scroll ${i + 1}: ${count} reviews loaded`);                                         
+      108 +                                                                                                                      
+      109 +  if (count === prevCount) {                                                                                          
+      110 +    stableRounds++;                                                                                                   
+      111 +    if (stableRounds >= 6) break;                                                                                     
+      112 +  } else {                                                                                                            
+      113 +    stableRounds = 0;                                                                                                 
+      114 +  }                                                                                                                   
+      115 +  prevCount = count;                                                                                                  
+      116  }
+      117 +console.log(`Total reviews loaded: ${prevCount}`);                                                                    
+      118  
+      119  // ── Expand all truncated reviews ("More" buttons) ──
+      120  console.log('Expanding truncated reviews...');

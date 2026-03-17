@@ -1,0 +1,90 @@
+/* Font loaded via next/font/google in layout.js */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #FDF8F0;
+    color: #2C1810;
+    font-family: var(--font-poppins), system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-outline {
+    @apply border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold px-8 py-4 rounded-full transition-all duration-300;
+  }
+  .section-heading {
+    @apply font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brown-900 leading-tight;
+  }
+  .section-subheading {
+    @apply text-lg md:text-xl text-brown-700 leading-relaxed;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6;
+  }
+  .section-beige {
+    @apply bg-beige-50;
+  }
+  .section-white {
+    @apply bg-white;
+  }
+  .section-tan {
+    @apply bg-beige-100;
+  }
+}
+
+/* Infinite marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5E9D3;
+}
+::-webkit-scrollbar-thumb {
+  background: #E07B39;
+  border-radius: 3px;
+}
+
+/* Sticky CTA bar animations */
+.sticky-cta-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.sticky-cta-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* Video placeholder pulse */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #F5E9D3 25%, #EDD8B0 50%, #F5E9D3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
