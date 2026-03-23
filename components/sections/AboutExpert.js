@@ -1,13 +1,12 @@
 'use client';
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import { Award, Users, BookOpen, Star, UserCircle } from 'lucide-react';
+import { Award, BookOpen, Activity } from 'lucide-react';
 
 const credentials = [
-  { Icon: BookOpen, text: 'M.Sc. Food & Nutrition (Details coming soon)' },
-  { Icon: Award,    text: 'Certified Registered Dietitian (RD)' },
-  { Icon: Users,    text: '500+ Successful Consultations' },
-  { Icon: Star,     text: '5+ Years of Clinical Experience' },
+  { Icon: BookOpen,   text: 'M.Sc. Food & Nutrition' },
+  { Icon: Award,      text: 'Certified Registered Dietitian (RD)' },
+  { Icon: Activity,   text: 'Specialised in PCOD / Hormonal & Metabolic Disorders' },
 ];
 
 export default function AboutExpert() {
@@ -17,49 +16,57 @@ export default function AboutExpert() {
   return (
     <section className="section-tan py-20 px-4" id="about">
       <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Photo side */}
-          <div ref={leftRef} className="opacity-0 translate-y-6 transition-all duration-700 relative">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-md mx-auto shadow-2xl bg-gradient-to-br from-beige-200 to-orange-300/40">
-              {/* Placeholder */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center">
-                  <UserCircle size={64} className="text-orange-400" />
-                </div>
-                <p className="text-brown-600 font-medium text-sm">Expert photo coming soon</p>
-              </div>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
 
-            {/* Floating badge */}
-            <div className="absolute bottom-6 -right-4 bg-orange-500 text-white rounded-2xl p-4 shadow-xl max-w-[180px]">
-              <p className="font-bold text-2xl">500+</p>
-              <p className="text-sm text-orange-100">Lives transformed with personalized nutrition</p>
+          {/* ── Photo ─────────────────────────────────────────────── */}
+          <div ref={leftRef} className="opacity-0 translate-y-6 transition-all duration-700">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-md mx-auto shadow-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/about/dr_award.jpg"
+                alt="Dt. Sushant Thakur — Pride Bharat Award 2025"
+                className="w-full h-full object-cover object-top"
+              />
+              {/* Gradient overlay at bottom */}
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/70 to-transparent" />
+
+              {/* Award badge inside photo */}
+              <div className="absolute bottom-5 left-4 right-4 flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center shrink-0 shadow-lg">
+                  <Award size={20} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm leading-tight">Pride Bharat Award 2025</p>
+                  <p className="text-white/80 text-xs mt-0.5">Clinical Excellence in Dietary Management</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Content side */}
+          {/* ── Content ───────────────────────────────────────────── */}
           <div ref={rightRef} className="opacity-0 translate-y-6 transition-all duration-700">
+
             <span className="inline-block bg-orange-100 text-orange-700 rounded-full px-4 py-1 text-sm font-semibold mb-4">
               Meet Your Dietitian
             </span>
 
             <p className="text-orange-600 font-semibold text-base mb-1">Dt. Sushant Thakur</p>
-            <h2 className="section-heading mb-4">
-              Your Personal Health Partner,{' '}
-              <span className="text-orange-500">Not Just a Diet Chart</span>
+            <h2 className="section-heading mb-6">
+              A Dietitian Who Understands{' '}
+              <span className="text-orange-500">Hormones, Not Just Calories</span>
             </h2>
 
             <p className="text-brown-700 leading-relaxed mb-5 font-light">
-              Hi! I am Dt. Sushant Thakur, founder of Diet Studio. With over 5 years of experience
-              in clinical nutrition and lifestyle management, I have helped hundreds of Indians across
-              the country transform their health — without giving up their favourite foods or
-              following impossible routines.
+              Hi! I am Dt. Sushant Thakur, founder of Diet Studio. Over 5+ years I have worked with
+              hundreds of women across India dealing with PCOD, insulin resistance, and hormonal
+              imbalances. I understand how frustrating it is to follow medical advice and still see
+              no change.
             </p>
 
             <p className="text-brown-700 leading-relaxed mb-8 font-light">
-              My approach is simple: <strong className="font-semibold">understand you first, then build your plan</strong>.
-              Whether you want to lose weight, manage diabetes, tackle PCOD, or just eat
-              healthier — I create a plan that fits your real life.
+              My approach focuses on the root cause: correcting insulin sensitivity, healing gut
+              health, and reducing inflammation — so your body can regulate its own hormones again,
+              without depending on medicines indefinitely.
             </p>
 
             {/* Credentials */}
@@ -80,6 +87,7 @@ export default function AboutExpert() {
               unique, and your plan should be too."
             </blockquote>
           </div>
+
         </div>
       </div>
     </section>

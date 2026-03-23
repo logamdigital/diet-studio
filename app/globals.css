@@ -55,6 +55,18 @@
   animation-play-state: paused;
 }
 
+/* Instagram testimonials marquee */
+@keyframes insta-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.insta-marquee-track {
+  animation: insta-marquee 60s linear infinite;
+}
+.insta-marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

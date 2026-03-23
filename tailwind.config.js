@@ -26,6 +26,15 @@ module.exports = {
           700: '#5C3D2B',
           600: '#7A5540',
         },
+        // Brand palette (logo / PCOD section)
+        brand: {
+          purple:     '#5E3B87',
+          'purple-light': '#EDE5F5',
+          teal:       '#00A5B5',
+          'teal-light': '#E0F6F8',
+          grey:       '#8D8D8D',
+          'grey-light': '#F0F0F0',
+        },
       },
       fontFamily: {
         heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { X, CheckCircle2, Loader2, Lock } from 'lucide-react';
+import { X, Loader2, Lock } from 'lucide-react';
 
 const healthGoals = [
   'Weight Loss',
@@ -54,10 +54,10 @@ export default function BookingModal({ isOpen, onClose }) {
         amount: order.amount,
         currency: 'INR',
         name: 'Diet Studio',
-        description: 'Personal Diet Consultation',
+        description: 'PCOD Reversal Consultation — Rs.200',
         order_id: order.id,
         prefill: { name: data.name, email: data.email, contact: data.phone },
-        theme: { color: '#E07B39' },
+        theme: { color: '#5E3B87' },
         handler: async (response) => {
           const verifyRes = await fetch('/api/verify-payment', {
             method: 'POST',
@@ -71,7 +71,7 @@ export default function BookingModal({ isOpen, onClose }) {
           });
 
           if (verifyRes.ok) {
-            setStep(3);
+            window.location.href = '/thank-you?name=' + encodeURIComponent(data.name);
           } else {
             setPaymentError('Payment verification failed. Please contact support.');
             setStep(1);
@@ -102,7 +102,7 @@ export default function BookingModal({ isOpen, onClose }) {
       {/* Modal */}
       <div className="relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[95vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white sticky top-0 z-10">
+        <div className="bg-gradient-to-r from-brand-purple to-[#4a2d6f] p-6 text-white sticky top-0 z-10">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
@@ -111,11 +111,10 @@ export default function BookingModal({ isOpen, onClose }) {
             <X size={18} />
           </button>
           <h2 className="font-heading text-xl font-bold">Book Your Consultation</h2>
-          <p className="text-orange-100 text-sm mt-1">30-min personal session with a certified dietitian</p>
+          <p className="text-white/80 text-sm mt-1">30-min initial consultation with Dt. Sushant Thakur</p>
           <div className="flex items-center gap-3 mt-3">
             <div className="bg-white/20 rounded-full px-3 py-1 text-sm font-bold">Rs.200</div>
-            <span className="text-orange-200 text-xs line-through">Rs.999</span>
-            <span className="text-green-300 text-xs font-semibold">80% OFF</span>
+            <span className="text-white/70 text-xs">Initial consultation charge only. Full program pricing discussed in session.</span>
           </div>
         </div>
 
@@ -132,21 +131,21 @@ export default function BookingModal({ isOpen, onClose }) {
               <div className="space-y-4">
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-brown-800 mb-1.5">Full Name *</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">Full Name *</label>
                   <input
                     {...register('name', { required: 'Please enter your name' })}
                     type="text"
                     placeholder="e.g. Anjali Sharma"
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition ${errors.name ? 'border-red-400' : 'border-beige-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-semibold text-brown-800 mb-1.5">WhatsApp / Phone Number *</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">WhatsApp / Phone Number *</label>
                   <div className="flex">
-                    <span className="bg-beige-100 border border-beige-300 border-r-0 rounded-l-xl px-3 flex items-center text-sm text-brown-600">+91</span>
+                    <span className="bg-gray-100 border border-gray-300 border-r-0 rounded-l-xl px-3 flex items-center text-sm text-gray-600">+91</span>
                     <input
                       {...register('phone', {
                         required: 'Phone number is required',
@@ -155,7 +154,7 @@ export default function BookingModal({ isOpen, onClose }) {
                       type="tel"
                       placeholder="9876543210"
                       maxLength={10}
-                      className={`w-full border rounded-r-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition ${errors.phone ? 'border-red-400' : 'border-beige-300'}`}
+                      className={`w-full border rounded-r-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
                     />
                   </div>
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
@@ -163,7 +162,7 @@ export default function BookingModal({ isOpen, onClose }) {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-semibold text-brown-800 mb-1.5">Email Address *</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">Email Address *</label>
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -171,17 +170,17 @@ export default function BookingModal({ isOpen, onClose }) {
                     })}
                     type="email"
                     placeholder="yourname@gmail.com"
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition ${errors.email ? 'border-red-400' : 'border-beige-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.email ? 'border-red-400' : 'border-gray-300'}`}
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
 
                 {/* Health Goal */}
                 <div>
-                  <label className="block text-sm font-semibold text-brown-800 mb-1.5">Primary Health Goal *</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">Primary Health Goal *</label>
                   <select
                     {...register('goal', { required: 'Please select your health goal' })}
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition ${errors.goal ? 'border-red-400' : 'border-beige-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white transition ${errors.goal ? 'border-red-400' : 'border-gray-300'}`}
                   >
                     <option value="">-- Select your goal --</option>
                     {healthGoals.map((g) => <option key={g} value={g}>{g}</option>)}
@@ -191,26 +190,26 @@ export default function BookingModal({ isOpen, onClose }) {
 
                 {/* Medical conditions */}
                 <div>
-                  <label className="block text-sm font-semibold text-brown-800 mb-1.5">
-                    Any Medical Conditions? <span className="font-normal text-brown-500">(optional)</span>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">
+                    Any Medical Conditions? <span className="font-normal text-gray-500">(optional)</span>
                   </label>
                   <input
                     {...register('conditions')}
                     type="text"
-                    placeholder="e.g. Diabetes Type 2, Hypothyroid"
-                    className="w-full border border-beige-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+                    placeholder="e.g. PCOD, Diabetes Type 2, Hypothyroid"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition"
                   />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-xl text-base mt-6 transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white font-bold py-4 rounded-xl text-base mt-6 transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
                 Proceed to Pay Rs.200
               </button>
 
-              <div className="flex items-center justify-center gap-1.5 mt-3 text-xs text-brown-400">
+              <div className="flex items-center justify-center gap-1.5 mt-3 text-xs text-gray-400">
                 <Lock size={12} />
                 <span>Your information is 100% confidential and secure</span>
               </div>
@@ -220,47 +219,9 @@ export default function BookingModal({ isOpen, onClose }) {
           {/* STEP 2: Processing */}
           {step === 2 && (
             <div className="py-12 text-center">
-              <Loader2 size={48} className="text-orange-500 animate-spin mx-auto mb-4" />
-              <h3 className="font-semibold text-brown-900 text-lg mb-2">Setting up payment...</h3>
-              <p className="text-brown-600 text-sm">You will be redirected to Razorpay in a moment.</p>
-            </div>
-          )}
-
-          {/* STEP 3: Success */}
-          {step === 3 && (
-            <div className="py-8 text-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 size={40} className="text-green-500" />
-              </div>
-              <h3 className="font-heading font-bold text-2xl text-brown-900 mb-2">Booking Confirmed!</h3>
-              <p className="text-brown-700 text-sm mb-4">
-                Thank you, <strong>{getValues('name')}</strong>! Your consultation is booked.
-              </p>
-              <p className="text-brown-600 text-sm mb-6">
-                We have sent the details to <strong>{getValues('email')}</strong> and
-                will reach out on WhatsApp to confirm your time slot.
-              </p>
-              <div className="bg-beige-50 rounded-xl p-4 text-left text-sm text-brown-700 mb-6 border border-beige-200">
-                <p className="font-semibold mb-2">Next Steps:</p>
-                <ul className="space-y-2">
-                  {[
-                    'Check your email for confirmation',
-                    'We will WhatsApp you to confirm your slot',
-                    'Join the call at your booked time',
-                  ].map((s, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <CheckCircle2 size={15} className="text-green-500 mt-0.5 shrink-0" />
-                      <span>{s}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button
-                onClick={onClose}
-                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-all"
-              >
-                Done
-              </button>
+              <Loader2 size={48} className="text-brand-purple animate-spin mx-auto mb-4" />
+              <h3 className="font-semibold text-gray-900 text-lg mb-2">Setting up payment...</h3>
+              <p className="text-gray-600 text-sm">You will be redirected to Razorpay in a moment.</p>
             </div>
           )}
         </div>
