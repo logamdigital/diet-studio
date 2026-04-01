@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { X, Loader2, Lock } from 'lucide-react';
 
@@ -16,11 +16,46 @@ const healthGoals = [
   'Other',
 ];
 
-export default function BookingModal({ isOpen, onClose }) {
+const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL;
+
+const fbq = (event, data = {}) => {
+  if (typeof window !== 'undefined' && window.fbq) window.fbq('track', event, data);
+};
+
+const getUtmParams = () => {
+  if (typeof window === 'undefined') return {};
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source:   p.get('utm_source')   || '',   // e.g. facebook
+    utm_medium:   p.get('utm_medium')   || '',   // e.g. cpc
+    utm_campaign: p.get('utm_campaign') || '',   // campaign name
+    utm_content:  p.get('utm_content')  || '',   // ad name / creative
+    utm_term:     p.get('utm_term')     || '',   // ad set / keyword
+    fbclid:       p.get('fbclid')       || '',   // Meta click ID (auto-appended)
+    landing_page: window.location.href,
+  };
+};
+
+const sendWebhook = (payload) => {
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }).catch(() => {}); // silent — never block the payment flow
+};
+
+export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
   const [step, setStep] = useState(1);
   const [paymentError, setPaymentError] = useState('');
 
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+  // Fire ViewContent every time the modal opens
+  useEffect(() => {
+    if (isOpen) fbq('ViewContent', { content_name: 'Booking Modal' });
+  }, [isOpen]);
+
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm({
+    defaultValues: { goal: defaultGoal },
+  });
 
   const loadRazorpay = () =>
     new Promise((resolve) => {
@@ -35,6 +70,9 @@ export default function BookingModal({ isOpen, onClose }) {
   const onSubmit = async (data) => {
     setPaymentError('');
     setStep(2);
+
+    // Lead captured — fire pixel only
+    fbq('Lead', { content_name: data.goal, value: 200, currency: 'INR' });
 
     try {
       const loaded = await loadRazorpay();
@@ -71,6 +109,21 @@ export default function BookingModal({ isOpen, onClose }) {
           });
 
           if (verifyRes.ok) {
+            fbq('Purchase', { value: 200, currency: 'INR', content_name: data.goal });
+            sendWebhook({
+              event: 'purchase',
+              name: data.name,
+              phone: '+91' + data.phone,
+              email: data.email,
+              goal: data.goal,
+              conditions: data.conditions || '',
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              amount: 200,
+              currency: 'INR',
+              timestamp: new Date().toISOString(),
+              ...getUtmParams(),
+            });
             window.location.href = '/thank-you?name=' + encodeURIComponent(data.name);
           } else {
             setPaymentError('Payment verification failed. Please contact support.');
@@ -81,6 +134,7 @@ export default function BookingModal({ isOpen, onClose }) {
       };
 
       const rzp = new window.Razorpay(options);
+      fbq('InitiateCheckout', { value: 200, currency: 'INR', num_items: 1 });
       rzp.on('payment.failed', (response) => {
         setPaymentError(response.error.description || 'Payment failed. Please try again.');
         setStep(1);
