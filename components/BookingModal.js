@@ -39,11 +39,13 @@ const getUtmParams = () => {
 
 const sendWebhook = (payload) => {
   const urls = [WEBHOOK_URL, CRM_WEBHOOK_URL].filter(Boolean);
+  const body = JSON.stringify(payload);
   urls.forEach((url) =>
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body,
+      keepalive: true, // keeps request alive even after page navigation
     }).catch(() => {}) // silent — never block the payment flow
   );
 };
