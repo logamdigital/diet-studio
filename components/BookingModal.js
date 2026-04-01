@@ -17,6 +17,7 @@ const healthGoals = [
 ];
 
 const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL;
+const CRM_WEBHOOK_URL = process.env.NEXT_PUBLIC_CRM_WEBHOOK_URL;
 
 const fbq = (event, data = {}) => {
   if (typeof window !== 'undefined' && window.fbq) window.fbq('track', event, data);
@@ -37,11 +38,14 @@ const getUtmParams = () => {
 };
 
 const sendWebhook = (payload) => {
-  fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).catch(() => {}); // silent — never block the payment flow
+  const urls = [WEBHOOK_URL, CRM_WEBHOOK_URL].filter(Boolean);
+  urls.forEach((url) =>
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {}) // silent — never block the payment flow
+  );
 };
 
 export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
