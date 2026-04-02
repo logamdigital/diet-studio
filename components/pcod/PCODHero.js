@@ -1,11 +1,9 @@
 'use client';
 
-import Script from 'next/script';
-import { useEffect } from 'react';
 import { ArrowRight, Clock, MapPin, Activity } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-const INSTAGRAM_REEL_URL = 'https://www.instagram.com/reel/DR_whdWlCwm/';
+const YOUTUBE_VIDEO_ID = 'iAvzfNBHvsQ';
 
 const stats = [
   { Icon: Clock,    value: '3 Months',           label: 'Reversal Program' },
@@ -18,12 +16,6 @@ export default function PCODHero({ onBookNow }) {
   const textRef   = useScrollReveal(100);
   const videoRef  = useScrollReveal(200);
   const statsRef  = useScrollReveal(300);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
-  }, []);
 
   return (
     <section className="bg-white pt-16 pb-16 px-4">
@@ -63,41 +55,18 @@ export default function PCODHero({ onBookNow }) {
           <p className="text-gray-400 text-sm mt-3">Rs.200 is for the initial consultation only · Full program pricing discussed in session</p>
         </div>
 
-        {/* Instagram embed */}
+        {/* YouTube Shorts embed */}
         <div
           ref={videoRef}
           className="opacity-0 translate-y-6 transition-all duration-700 flex justify-center mb-10"
         >
-          <div className="w-full max-w-sm">
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={INSTAGRAM_REEL_URL}
-              data-instgrm-version="14"
-              style={{
-                background: '#FFF',
-                border: 0,
-                borderRadius: '12px',
-                boxShadow: '0 4px 24px 0 rgba(0,0,0,0.10)',
-                margin: '0 auto',
-                maxWidth: '400px',
-                minWidth: '280px',
-                padding: 0,
-                width: '100%',
-              }}
-            >
-              <a href={INSTAGRAM_REEL_URL} target="_blank" rel="noreferrer">
-                Watch the video on Instagram
-              </a>
-            </blockquote>
-
-            <Script
-              src="https://www.instagram.com/embed.js"
-              strategy="lazyOnload"
-              onLoad={() => {
-                if (typeof window !== 'undefined' && window.instgrm) {
-                  window.instgrm.Embeds.process();
-                }
-              }}
+          <div className="w-full max-w-sm" style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 24px 0 rgba(0,0,0,0.10)' }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
+              title="PCOD Reversal Program"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ width: '100%', aspectRatio: '9/16', border: 0, display: 'block' }}
             />
           </div>
         </div>
