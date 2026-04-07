@@ -34,8 +34,7 @@ export default function FinalCTA({ onBookNow }) {
             </p>
 
             <p className="text-beige-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-light">
-              For just <strong className="text-orange-400 font-bold">Rs.200</strong>, get expert eyes on your health
-              and a clear, personalized path forward.
+              Get expert eyes on your health and a clear, personalized path forward.
             </p>
 
             {/* CTA */}
@@ -43,7 +42,7 @@ export default function FinalCTA({ onBookNow }) {
               onClick={onBookNow}
               className="bg-orange-500 hover:bg-orange-400 text-white font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-2xl hover:shadow-orange-500/30 hover:-translate-y-1 inline-flex items-center gap-3 group"
             >
-              Book My Consultation Now — Rs.200
+              Get 1:1 Consultation with Dr. Sushant
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -65,7 +64,7 @@ export default function FinalCTA({ onBookNow }) {
               {[
                 ['500+', 'Clients Helped'],
                 ['4.9 Stars', 'Average Rating'],
-                ['Rs.200', 'All-Inclusive'],
+                ['30 Min', 'Expert Session'],
               ].map(([val, label]) => (
                 <div key={label} className="text-center">
                   <p className="text-orange-400 font-bold text-2xl font-heading">{val}</p>

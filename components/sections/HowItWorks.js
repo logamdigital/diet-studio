@@ -9,7 +9,7 @@ const steps = [
     Icon: CreditCard,
     title: 'Book & Pay',
     subtitle: '2 minutes',
-    desc: 'Click the button, fill a short form with your health details, and pay Rs.200 securely. Accepted: UPI, cards, net banking, wallets.',
+    desc: 'Click the button, fill a short form with your health details, and pay securely. Accepted: UPI, cards, net banking, wallets.',
     iconColor: 'bg-orange-100 text-orange-600',
   },
   {
@@ -73,7 +73,7 @@ export default function HowItWorks({ onBookNow }) {
         {/* CTA */}
         <div className="text-center mt-14">
           <button onClick={onBookNow} className="btn-primary text-lg">
-            Book My Slot — Only Rs.200
+            Get 1:1 Consultation with Dr. Sushant
           </button>
           <p className="text-brown-500 text-sm mt-3">
             Takes less than 2 minutes · Secure Razorpay checkout

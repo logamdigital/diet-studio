@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2, Wifi, Activity } from 'lucide-react';
 
 const trustPoints = [
   { Icon: Activity,     text: 'BCA Analysis Included' },
-  { Icon: CheckCircle2, text: 'Rs.200 for Initial Consultation Only' },
+  { Icon: CheckCircle2, text: 'Personalised Plan for Your Body' },
   { Icon: Wifi,         text: 'Online Available' },
 ];
 
@@ -44,7 +44,7 @@ export default function PCODFinalCTA({ onBookNow }) {
               onClick={onBookNow}
               className="bg-white text-brand-purple hover:bg-brand-purple-light font-bold px-10 py-5 rounded-full text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-1 inline-flex items-center gap-3 group"
             >
-              Book PCOD Reversal Consultation — Rs.200
+              Get 1:1 Consultation with Dr. Sushant
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
 

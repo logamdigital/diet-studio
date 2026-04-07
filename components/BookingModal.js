@@ -98,7 +98,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
         amount: order.amount,
         currency: 'INR',
         name: 'Diet Studio',
-        description: 'PCOD Reversal Consultation — Rs.200',
+        description: '1:1 Consultation with Dr. Sushant',
         order_id: order.id,
         prefill: { name: data.name, email: data.email, contact: data.phone },
         theme: { color: '#5E3B87' },
@@ -173,8 +173,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
           <h2 className="font-heading text-xl font-bold">Book Your Consultation</h2>
           <p className="text-white/80 text-sm mt-1">30-min initial consultation with Dt. Sushant Thakur</p>
           <div className="flex items-center gap-3 mt-3">
-            <div className="bg-white/20 rounded-full px-3 py-1 text-sm font-bold">Rs.200</div>
-            <span className="text-white/70 text-xs">Initial consultation charge only. Full program pricing discussed in session.</span>
+            <span className="text-white/70 text-xs">Personalized plan built for your body. Full program pricing discussed in session.</span>
           </div>
         </div>
 
@@ -266,7 +265,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                 type="submit"
                 className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white font-bold py-4 rounded-xl text-base mt-6 transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
-                Proceed to Pay Rs.200
+                Proceed to Book
               </button>
 
               <div className="flex items-center justify-center gap-1.5 mt-3 text-xs text-gray-400">

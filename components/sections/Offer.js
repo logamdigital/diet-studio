@@ -28,7 +28,7 @@ export default function Offer({ onBookNow }) {
           </span>
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
             Everything Included in Your{' '}
-            <span className="text-orange-400">₹200 Consultation</span>
+            <span className="text-orange-400">Initial Consultation</span>
           </h2>
           <p className="text-beige-200 text-lg max-w-xl mx-auto font-light">
             No hidden fees. No upsells inside the call. Just expert nutrition guidance built around you.
@@ -63,13 +63,6 @@ export default function Offer({ onBookNow }) {
                 </div>
 
                 <div className="mb-6">
-                  <div className="flex items-end gap-3 mb-1">
-                    <span className="text-6xl font-bold text-white font-heading">₹200</span>
-                    <div className="pb-2">
-                      <p className="text-orange-200 line-through text-xl">₹999</p>
-                      <p className="text-orange-100 text-xs">80% off today</p>
-                    </div>
-                  </div>
                   <p className="text-orange-100 text-sm">One-time consultation booking fee</p>
                 </div>
 
@@ -109,7 +102,7 @@ export default function Offer({ onBookNow }) {
                   ['Gym membership (monthly)', '₹3,000 – ₹5,000'],
                   ['Random supplements',       '₹2,000 – ₹8,000'],
                   ['Private doctor visit',     '₹500 – ₹2,000'],
-                  ['Diet Studio consultation', '₹200 only'],
+                  ['Diet Studio consultation', 'Book now'],
                 ].map(([label, cost], i) => (
                   <div key={i} className={`flex justify-between ${i === 3 ? 'text-orange-300 font-bold' : 'text-beige-300'}`}>
                     <span>{label}</span>

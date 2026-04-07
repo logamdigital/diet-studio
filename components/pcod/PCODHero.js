@@ -49,10 +49,9 @@ export default function PCODHero({ onBookNow }) {
             onClick={onBookNow}
             className="bg-brand-purple hover:bg-brand-purple/90 text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-flex items-center gap-2 group"
           >
-            Book PCOD Reversal Consultation — Rs.200
+            Get 1:1 Consultation with Dr. Sushant
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
-          <p className="text-gray-400 text-sm mt-3">Rs.200 is for the initial consultation only · Full program pricing discussed in session</p>
         </div>
 
         {/* YouTube Shorts embed */}

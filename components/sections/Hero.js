@@ -68,13 +68,8 @@ export default function Hero({ onBookNow }) {
             onClick={onBookNow}
             className="btn-primary text-lg flex items-center gap-2"
           >
-            Book My Consultation
-            <span className="bg-white/20 rounded-full px-2 py-0.5 text-sm font-bold">₹200</span>
+            Get 1:1 Consultation with Dr. Sushant
           </button>
-          <div className="text-sm text-brown-600">
-            <span className="line-through text-brown-400 mr-1">₹999</span>
-            <span className="text-orange-600 font-semibold">Limited-time introductory price</span>
-          </div>
         </div>
 
         {/* Micro trust */}
