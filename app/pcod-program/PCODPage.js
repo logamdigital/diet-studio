@@ -29,7 +29,7 @@ export default function PCODPage() {
         <PCODFinalCTA    onBookNow={openModal} />
       </main>
 
-      <BookingModal isOpen={modalOpen} onClose={closeModal} defaultGoal="PCOD / PCOS" />
+      <BookingModal isOpen={modalOpen} onClose={closeModal} defaultGoal="PCOD / PCOS" simple />
       <StickyBar onBookNow={openModal} />
     </>
   );

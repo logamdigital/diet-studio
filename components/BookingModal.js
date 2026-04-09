@@ -50,7 +50,7 @@ const sendWebhook = (payload) => {
   );
 };
 
-export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
+export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false }) {
   const [step, setStep] = useState(1);
   const [paymentError, setPaymentError] = useState('');
 
@@ -236,30 +236,34 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                 </div>
 
                 {/* Health Goal */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">Primary Health Goal *</label>
-                  <select
-                    {...register('goal', { required: 'Please select your health goal' })}
-                    className={`w-full border rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white transition ${errors.goal ? 'border-red-400' : 'border-gray-300'}`}
-                  >
-                    <option value="">-- Select your goal --</option>
-                    {healthGoals.map((g) => <option key={g} value={g}>{g}</option>)}
-                  </select>
-                  {errors.goal && <p className="text-red-500 text-xs mt-1">{errors.goal.message}</p>}
-                </div>
+                {!simple && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-800 mb-1.5">Primary Health Goal *</label>
+                    <select
+                      {...register('goal', { required: !simple && 'Please select your health goal' })}
+                      className={`w-full border rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white transition ${errors.goal ? 'border-red-400' : 'border-gray-300'}`}
+                    >
+                      <option value="">-- Select your goal --</option>
+                      {healthGoals.map((g) => <option key={g} value={g}>{g}</option>)}
+                    </select>
+                    {errors.goal && <p className="text-red-500 text-xs mt-1">{errors.goal.message}</p>}
+                  </div>
+                )}
 
                 {/* Medical conditions */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">
-                    Any Medical Conditions? <span className="font-normal text-gray-500">(optional)</span>
-                  </label>
-                  <input
-                    {...register('conditions')}
-                    type="text"
-                    placeholder="e.g. PCOD, Diabetes Type 2, Hypothyroid"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition"
-                  />
-                </div>
+                {!simple && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-800 mb-1.5">
+                      Any Medical Conditions? <span className="font-normal text-gray-500">(optional)</span>
+                    </label>
+                    <input
+                      {...register('conditions')}
+                      type="text"
+                      placeholder="e.g. PCOD, Diabetes Type 2, Hypothyroid"
+                      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition"
+                    />
+                  </div>
+                )}
               </div>
 
               <button
