@@ -78,7 +78,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
     setStep(2);
 
     // Lead captured — fire pixel only
-    fbq('Lead', { content_name: data.goal, value: 200, currency: 'INR' });
+    fbq('Lead', { content_name: data.goal, value: 99, currency: 'INR' });
 
     try {
       const loaded = await loadRazorpay();
@@ -115,7 +115,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
           });
 
           if (verifyRes.ok) {
-            fbq('Purchase', { value: 200, currency: 'INR', content_name: data.goal });
+            fbq('Purchase', { value: 99, currency: 'INR', content_name: data.goal });
             sendWebhook({
               event: 'purchase',
               name: data.name,
@@ -125,7 +125,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
               conditions: data.conditions || '',
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
-              amount: 200,
+              amount: 99,
               currency: 'INR',
               timestamp: new Date().toISOString(),
               ...getUtmParams(),
@@ -140,7 +140,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
       };
 
       const rzp = new window.Razorpay(options);
-      fbq('InitiateCheckout', { value: 200, currency: 'INR', num_items: 1 });
+      fbq('InitiateCheckout', { value: 99, currency: 'INR', num_items: 1 });
       rzp.on('payment.failed', (response) => {
         setPaymentError(response.error.description || 'Payment failed. Please try again.');
         setStep(1);
@@ -160,7 +160,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[95vh] overflow-y-auto">
+      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto overscroll-contain">
         {/* Header */}
         <div className="bg-gradient-to-r from-brand-purple to-[#4a2d6f] p-6 text-white sticky top-0 z-10">
           <button
@@ -195,7 +195,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                     {...register('name', { required: 'Please enter your name' })}
                     type="text"
                     placeholder="e.g. Anjali Sharma"
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                 </div>
@@ -213,7 +213,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                       type="tel"
                       placeholder="9876543210"
                       maxLength={10}
-                      className={`w-full border rounded-r-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
+                      className={`w-full border rounded-r-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
                     />
                   </div>
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
@@ -221,15 +221,16 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">Email Address *</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1.5">
+                    Email Address <span className="font-normal text-gray-500">(optional)</span>
+                  </label>
                   <input
                     {...register('email', {
-                      required: 'Email is required',
                       pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' },
                     })}
                     type="email"
                     placeholder="yourname@gmail.com"
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.email ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition ${errors.email ? 'border-red-400' : 'border-gray-300'}`}
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
@@ -239,7 +240,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                   <label className="block text-sm font-semibold text-gray-800 mb-1.5">Primary Health Goal *</label>
                   <select
                     {...register('goal', { required: 'Please select your health goal' })}
-                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white transition ${errors.goal ? 'border-red-400' : 'border-gray-300'}`}
+                    className={`w-full border rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white transition ${errors.goal ? 'border-red-400' : 'border-gray-300'}`}
                   >
                     <option value="">-- Select your goal --</option>
                     {healthGoals.map((g) => <option key={g} value={g}>{g}</option>)}
@@ -256,7 +257,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '' }) {
                     {...register('conditions')}
                     type="text"
                     placeholder="e.g. PCOD, Diabetes Type 2, Hypothyroid"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple transition"
                   />
                 </div>
               </div>
