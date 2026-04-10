@@ -53,6 +53,23 @@ const sendWebhook = (payload) => {
 export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false }) {
   const [step, setStep] = useState(1);
   const [paymentError, setPaymentError] = useState('');
+  const [kbHeight, setKbHeight] = useState(0);
+
+  // Shift modal above keyboard when it opens
+  useEffect(() => {
+    if (!isOpen) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const update = () => setKbHeight(Math.max(0, window.innerHeight - vv.height - vv.offsetTop));
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    update();
+    return () => {
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+      setKbHeight(0);
+    };
+  }, [isOpen]);
 
   // Fire ViewContent every time the modal opens
   useEffect(() => {
@@ -155,12 +172,26 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      style={{
+        paddingBottom: kbHeight || undefined,
+        transition: 'padding-bottom 0.2s ease-out',
+      }}
+      role="dialog"
+      aria-modal="true"
+    >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto overscroll-contain">
+      <div
+        className="relative bg-white w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto overscroll-contain"
+        style={{
+          maxHeight: kbHeight > 0 ? `calc(100dvh - ${kbHeight}px - 8px)` : undefined,
+          transition: 'max-height 0.2s ease-out',
+        }}
+      >
         {/* Header */}
         <div className="bg-gradient-to-r from-brand-purple to-[#4a2d6f] p-6 text-white sticky top-0 z-10">
           <button
@@ -180,7 +211,16 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
         <div className="p-6">
           {/* STEP 1: Form */}
           {step === 1 && (
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              onFocus={(e) => {
+                const tag = e.target.tagName;
+                if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
+                  setTimeout(() => e.target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 320);
+                }
+              }}
+              noValidate
+            >
               {paymentError && (
                 <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm mb-4">
                   {paymentError}
