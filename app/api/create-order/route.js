@@ -4,7 +4,7 @@ import Razorpay from 'razorpay';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, phone, email } = body;
+    const { name, phone, email, price = 99 } = body;
 
     if (!name || !phone) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -16,7 +16,7 @@ export async function POST(request) {
     });
 
     const order = await razorpay.orders.create({
-      amount: 9900, // ₹99 in paise
+      amount: price * 100, // convert to paise
       currency: 'INR',
       receipt: `receipt_${Date.now()}`,
       notes: {

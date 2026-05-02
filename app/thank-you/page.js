@@ -1,41 +1,62 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
-import { CheckCircle2, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Suspense, useEffect } from 'react';
+import { CheckCircle2 } from 'lucide-react';
+import Script from 'next/script';
 
 function ThankYouContent() {
   const params = useSearchParams();
-  const name = params.get('name') || 'there';
+  const name = params.get('name') || '';
+  const email = params.get('email') || '';
+
+  const calendlyUrl = new URL('https://calendly.com/contact-thedietstudio/30min');
+  if (name) calendlyUrl.searchParams.set('name', name);
+  if (email) calendlyUrl.searchParams.set('email', email);
+
+  useEffect(() => {
+    if (window.Calendly) {
+      window.Calendly.initInlineWidget({
+        url: calendlyUrl.toString(),
+        parentElement: document.getElementById('calendly-embed'),
+      });
+    }
+  }, []);
 
   return (
-    <main className="min-h-screen bg-brand-purple-light flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 text-center">
+    <main className="h-dvh flex flex-col bg-brand-purple-light overflow-hidden">
 
-        <div className="w-20 h-20 bg-brand-teal-light rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 size={44} className="text-brand-teal" />
+      {/* Compact confirmation banner */}
+      <div className="flex-none px-4 pt-4 pb-3">
+        <div className="bg-white rounded-2xl shadow-md px-5 py-3 flex items-center gap-3">
+          <CheckCircle2 size={28} className="text-brand-teal shrink-0" />
+          <div>
+            <p className="font-bold text-gray-900 text-sm leading-tight">
+              Payment Confirmed{name ? `, ${name}!` : '!'}
+            </p>
+            <p className="text-gray-500 text-xs leading-tight mt-0.5">
+              Pick a time slot below to schedule your consultation with Dt. Sushant.
+            </p>
+          </div>
         </div>
-
-        <h1 className="font-heading text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-          Booking Confirmed!
-        </h1>
-
-        <p className="text-gray-600 leading-relaxed font-light">
-          Thank you, <span className="text-brand-purple font-semibold">{name}</span>! We have
-          received your consultation charge. Dt. Sushant will reach out to you shortly to
-          confirm your session.
-        </p>
-
-        <Link
-          href="/pcod-program"
-          className="mt-8 inline-flex items-center gap-2 border-2 border-brand-purple text-brand-purple hover:bg-brand-purple-light font-semibold py-3 px-6 rounded-xl text-sm transition-colors"
-        >
-          <ArrowLeft size={15} />
-          Back to Program
-        </Link>
-
       </div>
+
+      {/* Calendly takes all remaining height */}
+      <div className="flex-1 px-4 pb-4 min-h-0">
+        <div className="h-full bg-white rounded-2xl shadow-md overflow-hidden">
+          <div
+            id="calendly-embed"
+            className="calendly-inline-widget"
+            data-url={calendlyUrl.toString()}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+      </div>
+
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+      />
     </main>
   );
 }

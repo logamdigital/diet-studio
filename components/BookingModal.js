@@ -50,7 +50,7 @@ const sendWebhook = (payload) => {
   );
 };
 
-export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false }) {
+export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false, price = 99 }) {
   const [step, setStep] = useState(1);
   const [paymentError, setPaymentError] = useState('');
   const [kbHeight, setKbHeight] = useState(0);
@@ -95,7 +95,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
     setStep(2);
 
     // Lead captured — fire pixel only
-    fbq('Lead', { content_name: data.goal, value: 99, currency: 'INR' });
+    fbq('Lead', { content_name: data.goal, value: price, currency: 'INR' });
 
     try {
       const loaded = await loadRazorpay();
@@ -104,7 +104,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
       const orderRes = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: data.name, phone: data.phone, email: data.email }),
+        body: JSON.stringify({ name: data.name, phone: data.phone, email: data.email, price }),
       });
 
       if (!orderRes.ok) throw new Error('Could not initiate payment. Please try again.');
@@ -132,7 +132,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
           });
 
           if (verifyRes.ok) {
-            fbq('Purchase', { value: 99, currency: 'INR', content_name: data.goal });
+            fbq('Purchase', { value: price, currency: 'INR', content_name: data.goal });
             sendWebhook({
               event: 'purchase',
               name: data.name,
@@ -142,12 +142,13 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
               conditions: data.conditions || '',
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
-              amount: 99,
+              amount: price,
               currency: 'INR',
               timestamp: new Date().toISOString(),
               ...getUtmParams(),
             });
-            window.location.href = '/thank-you?name=' + encodeURIComponent(data.name);
+            const qs = new URLSearchParams({ name: data.name, ...(data.email ? { email: data.email } : {}) });
+            window.location.href = '/thank-you?' + qs.toString();
           } else {
             setPaymentError('Payment verification failed. Please contact support.');
             setStep(1);
@@ -157,7 +158,7 @@ export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple
       };
 
       const rzp = new window.Razorpay(options);
-      fbq('InitiateCheckout', { value: 99, currency: 'INR', num_items: 1 });
+      fbq('InitiateCheckout', { value: price, currency: 'INR', num_items: 1 });
       rzp.on('payment.failed', (response) => {
         setPaymentError(response.error.description || 'Payment failed. Please try again.');
         setStep(1);
