@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import Script from 'next/script';
 
@@ -9,6 +9,7 @@ function ThankYouContent() {
   const params = useSearchParams();
   const name = params.get('name') || '';
   const email = params.get('email') || '';
+  const [calendlyReady, setCalendlyReady] = useState(false);
 
   const calendlyUrl = new URL('https://calendly.com/contact-thedietstudio/30min');
   if (name) calendlyUrl.searchParams.set('name', name);
@@ -21,6 +22,15 @@ function ThankYouContent() {
         parentElement: document.getElementById('calendly-embed'),
       });
     }
+
+    // Calendly fires this message when the booking page is fully rendered
+    const onMessage = (e) => {
+      if (e.data?.event === 'calendly.event_type_viewed') {
+        setCalendlyReady(true);
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
   }, []);
 
   return (
@@ -42,7 +52,19 @@ function ThankYouContent() {
       </div>
 
       {/* Calendly takes all remaining height */}
-      <div className="flex-1 px-4 pb-4 min-h-0">
+      <div className="flex-1 px-4 pb-4 min-h-0 relative">
+
+        {/* Loader — shown until Calendly fires event_type_viewed */}
+        {!calendlyReady && (
+          <div className="absolute inset-0 mx-4 mb-4 bg-white rounded-2xl shadow-md flex flex-col items-center justify-center gap-4 z-10">
+            <div className="w-12 h-12 border-4 border-brand-purple/20 border-t-brand-purple rounded-full animate-spin" />
+            <div className="text-center">
+              <p className="font-semibold text-gray-800 text-sm">Loading your booking calendar...</p>
+              <p className="text-gray-400 text-xs mt-1">This usually takes just a few seconds</p>
+            </div>
+          </div>
+        )}
+
         <div className="h-full bg-white rounded-2xl shadow-md overflow-hidden">
           <div
             id="calendly-embed"
