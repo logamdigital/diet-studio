@@ -16,14 +16,6 @@ function ThankYouContent() {
   if (email) calendlyUrl.searchParams.set('email', email);
 
   useEffect(() => {
-    if (window.Calendly) {
-      window.Calendly.initInlineWidget({
-        url: calendlyUrl.toString(),
-        parentElement: document.getElementById('calendly-embed'),
-      });
-    }
-
-    // Calendly fires this message when the booking page is fully rendered
     const onMessage = (e) => {
       if (e.data?.event === 'calendly.event_type_viewed') {
         setCalendlyReady(true);
@@ -32,6 +24,15 @@ function ThankYouContent() {
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
   }, []);
+
+  const handleScriptLoad = () => {
+    if (window.Calendly) {
+      window.Calendly.initInlineWidget({
+        url: calendlyUrl.toString(),
+        parentElement: document.getElementById('calendly-embed'),
+      });
+    }
+  };
 
   return (
     <main className="h-dvh flex flex-col bg-brand-purple-light overflow-hidden">
@@ -78,6 +79,7 @@ function ThankYouContent() {
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
         strategy="afterInteractive"
+        onLoad={handleScriptLoad}
       />
     </main>
   );
