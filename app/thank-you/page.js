@@ -1,86 +1,74 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
-import Script from 'next/script';
+import { Suspense } from 'react';
+import { CheckCircle2, Calendar, MessageCircle, Clock } from 'lucide-react';
 
 function ThankYouContent() {
   const params = useSearchParams();
-  const name = params.get('name') || '';
-  const email = params.get('email') || '';
-  const [calendlyReady, setCalendlyReady] = useState(false);
-
-  const calendlyUrl = new URL('https://calendly.com/contact-thedietstudio/30min');
-  if (name) calendlyUrl.searchParams.set('name', name);
-  if (email) calendlyUrl.searchParams.set('email', email);
-
-  useEffect(() => {
-    const onMessage = (e) => {
-      if (e.data?.event === 'calendly.event_type_viewed') {
-        setCalendlyReady(true);
-      }
-    };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
-  }, []);
-
-  const handleScriptLoad = () => {
-    if (window.Calendly) {
-      window.Calendly.initInlineWidget({
-        url: calendlyUrl.toString(),
-        parentElement: document.getElementById('calendly-embed'),
-      });
-    }
-  };
+  const name   = params.get('name') || '';
 
   return (
-    <main className="h-dvh flex flex-col bg-brand-purple-light overflow-hidden">
+    <main className="min-h-dvh flex flex-col items-center justify-center bg-brand-purple-light px-4 py-10">
+      <div className="w-full max-w-sm flex flex-col gap-4">
 
-      {/* Compact confirmation banner */}
-      <div className="flex-none px-4 pt-4 pb-3">
-        <div className="bg-white rounded-2xl shadow-md px-5 py-3 flex items-center gap-3">
-          <CheckCircle2 size={28} className="text-brand-teal shrink-0" />
-          <div>
-            <p className="font-bold text-gray-900 text-sm leading-tight">
-              Payment Confirmed{name ? `, ${name}!` : '!'}
-            </p>
-            <p className="text-gray-500 text-xs leading-tight mt-0.5">
-              Pick a time slot below to schedule your consultation with Dt. Sushant.
-            </p>
+        {/* Confirmation card */}
+        <div className="bg-white rounded-2xl shadow-md px-6 py-6 text-center">
+          <div className="w-16 h-16 bg-brand-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 size={36} className="text-brand-teal" />
           </div>
+          <h1 className="font-heading text-xl font-bold text-gray-900 leading-tight">
+            {name ? `You're all set, ${name}!` : "You're all set!"}
+          </h1>
+          <p className="text-gray-500 text-sm mt-2 leading-relaxed">
+            Your payment is confirmed and your consultation slot is booked with Dt. Sushant.
+          </p>
         </div>
-      </div>
 
-      {/* Calendly takes all remaining height */}
-      <div className="flex-1 px-4 pb-4 min-h-0 relative">
+        {/* What to expect */}
+        <div className="bg-white rounded-2xl shadow-md px-5 py-4 flex flex-col gap-3">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">What happens next</p>
 
-        {/* Loader — shown until Calendly fires event_type_viewed */}
-        {!calendlyReady && (
-          <div className="absolute inset-0 mx-4 mb-4 bg-white rounded-2xl shadow-md flex flex-col items-center justify-center gap-4 z-10">
-            <div className="w-12 h-12 border-4 border-brand-purple/20 border-t-brand-purple rounded-full animate-spin" />
-            <div className="text-center">
-              <p className="font-semibold text-gray-800 text-sm">Loading your booking calendar...</p>
-              <p className="text-gray-400 text-xs mt-1">This usually takes just a few seconds</p>
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-brand-purple/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              <Calendar size={15} className="text-brand-purple" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800">Check your calendar invite</p>
+              <p className="text-xs text-gray-500 mt-0.5">A confirmation email with the meeting link has been sent to you by Calendly.</p>
             </div>
           </div>
-        )}
 
-        <div className="h-full bg-white rounded-2xl shadow-md overflow-hidden">
-          <div
-            id="calendly-embed"
-            className="calendly-inline-widget"
-            data-url={calendlyUrl.toString()}
-            style={{ width: '100%', height: '100%' }}
-          />
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-brand-purple/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              <MessageCircle size={15} className="text-brand-purple" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800">WhatsApp reminder</p>
+              <p className="text-xs text-gray-500 mt-0.5">Dt. Sushant's team will reach out on WhatsApp before your session.</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-brand-purple/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              <Clock size={15} className="text-brand-purple" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800">Join on time</p>
+              <p className="text-xs text-gray-500 mt-0.5">Your 30-minute session will be on Google Meet or phone call as scheduled.</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-        onLoad={handleScriptLoad}
-      />
+        <a
+          href="https://wa.me/919999999999"
+          className="text-center text-xs text-gray-400 px-4 hover:text-brand-purple transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Questions? <span className="font-semibold underline">WhatsApp us</span>
+        </a>
+      </div>
     </main>
   );
 }

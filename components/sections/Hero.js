@@ -68,7 +68,7 @@ export default function Hero({ onBookNow }) {
             onClick={onBookNow}
             className="btn-primary text-lg flex items-center gap-2"
           >
-            Get 1:1 Consultation with Dr. Sushant
+            Get 1:1 Consultation with Dt. Sushant
           </button>
         </div>
 

@@ -25,7 +25,7 @@ export default function StickyBar({ onBookNow }) {
               onClick={onBookNow}
               className="bg-white text-brand-purple hover:bg-brand-purple-light font-bold px-5 py-2.5 rounded-full text-sm transition-all hover:shadow-lg flex items-center gap-1.5"
             >
-              Get 1:1 Consultation with Dr. Sushant
+              Get 1:1 Consultation with Dt. Sushant
               <ArrowRight size={15} />
             </button>
           </div>

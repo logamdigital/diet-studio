@@ -7,7 +7,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 const faqs = [
   {
     q: 'What happens during the consultation? What does the diet plan cost?',
-    a: 'During your 30-minute 1:1 session with Dr. Sushant, he will understand your health goals, assess your situation, and explain the personalized plan options with their pricing. There is absolutely no obligation to purchase anything during or after the consultation.',
+    a: 'During your 30-minute 1:1 session with Dt. Sushant, he will understand your health goals, assess your situation, and explain the personalized plan options with their pricing. There is absolutely no obligation to purchase anything during or after the consultation.',
   },
   {
     q: 'I am vegetarian. Will the diet plan work for me?',

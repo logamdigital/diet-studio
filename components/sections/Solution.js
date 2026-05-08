@@ -87,7 +87,7 @@ export default function Solution({ onBookNow }) {
               Not sure if we can help with your specific condition? Ask during the consultation.
             </p>
             <button onClick={onBookNow} className="btn-primary">
-              Get 1:1 Consultation with Dr. Sushant
+              Get 1:1 Consultation with Dt. Sushant
             </button>
           </div>
         </div>

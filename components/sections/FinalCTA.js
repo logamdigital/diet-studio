@@ -42,7 +42,7 @@ export default function FinalCTA({ onBookNow }) {
               onClick={onBookNow}
               className="bg-orange-500 hover:bg-orange-400 text-white font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-2xl hover:shadow-orange-500/30 hover:-translate-y-1 inline-flex items-center gap-3 group"
             >
-              Get 1:1 Consultation with Dr. Sushant
+              Get 1:1 Consultation with Dt. Sushant
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
 

@@ -61,7 +61,7 @@ export default function PCODReversal({ onBookNow }) {
           </h2>
           <p className="section-subheading max-w-2xl mx-auto">
             Metformin lowers sugar. Contraceptive pills regulate your cycle artificially. But the
-            moment you stop, the problem returns. Hear directly from Dr. Sushant — and discover the
+            moment you stop, the problem returns. Hear directly from Dt. Sushant — and discover the
             3-phase program that reverses PCOD from the root in just 3 months.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function PCODReversal({ onBookNow }) {
         {/* ── Two-column: Video + Content ────────────────────────────────────── */}
         <div className="grid lg:grid-cols-2 gap-12 items-start mb-14">
 
-          {/* Left — Dr. Sushant photo */}
+          {/* Left — Dt. Sushant photo */}
           <div
             ref={leftRef}
             className="opacity-0 translate-y-6 transition-all duration-700 flex justify-center"

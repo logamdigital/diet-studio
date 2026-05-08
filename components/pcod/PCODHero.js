@@ -42,14 +42,14 @@ export default function PCODHero({ onBookNow }) {
           </h1>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8 font-light">
             Metformin and contraceptive pills only manage your symptoms. The moment you stop,
-            your PCOD returns. Watch Dr. Sushant explain the root cause and how the 3-phase
+            your PCOD returns. Watch Dt. Sushant explain the root cause and how the 3-phase
             reversal program fixes it permanently.
           </p>
           <button
             onClick={onBookNow}
             className="bg-brand-purple hover:bg-brand-purple/90 text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-flex items-center gap-2 group"
           >
-            Get 1:1 Consultation with Dr. Sushant
+            Get 1:1 Consultation with Dt. Sushant
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

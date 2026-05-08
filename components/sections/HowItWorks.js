@@ -73,7 +73,7 @@ export default function HowItWorks({ onBookNow }) {
         {/* CTA */}
         <div className="text-center mt-14">
           <button onClick={onBookNow} className="btn-primary text-lg">
-            Get 1:1 Consultation with Dr. Sushant
+            Get 1:1 Consultation with Dt. Sushant
           </button>
           <p className="text-brown-500 text-sm mt-3">
             Takes less than 2 minutes · Secure Razorpay checkout

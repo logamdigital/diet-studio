@@ -4,8 +4,9 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Award, Users, BookOpen, Star, Activity } from 'lucide-react';
 
 const credentials = [
-  { Icon: BookOpen,  text: 'M.Sc. Food & Nutrition' },
-  { Icon: Award,     text: 'Certified Registered Dietitian (RD)' },
+  { Icon: BookOpen,  text: 'M. Pharm' },
+  { Icon: BookOpen,  text: 'M.Sc. Nutrition and Dietetics' },
+  { Icon: Award,     text: 'K11 Certified in Sports Nutrition' },
   { Icon: Activity,  text: 'Specialised in PCOD / Hormonal & Metabolic Disorders' },
   { Icon: Users,     text: '500+ Clients Successfully Treated' },
   { Icon: Star,      text: '5+ Years of Clinical Experience' },

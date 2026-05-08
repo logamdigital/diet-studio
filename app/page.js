@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/sections/Hero';
 import TrustBar from '@/components/sections/TrustBar';
@@ -15,38 +15,33 @@ import HowItWorks from '@/components/sections/HowItWorks';
 import FAQ from '@/components/sections/FAQ';
 import FinalCTA from '@/components/sections/FinalCTA';
 import Footer from '@/components/Footer';
-import BookingModal from '@/components/BookingModal';
 import StickyBar from '@/components/StickyBar';
 
 export default function HomePage() {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const router = useRouter();
+  const openBooking = () => router.push('/booking');
 
   return (
     <>
-      <Navbar onBookNow={openModal} />
+      <Navbar onBookNow={openBooking} />
 
       <main>
-        <Hero onBookNow={openModal} />
+        <Hero onBookNow={openBooking} />
         <TrustBar />
         <PainPoints />
-        <Solution onBookNow={openModal} />
-        <PCODReversal onBookNow={openModal} />
+        <Solution onBookNow={openBooking} />
+        <PCODReversal onBookNow={openBooking} />
         <AboutExpert />
         <GoogleReviews />
         <InstaTestimonials />
-        <HowItWorks onBookNow={openModal} />
-        <Offer onBookNow={openModal} />
+        <HowItWorks onBookNow={openBooking} />
+        <Offer onBookNow={openBooking} />
         <FAQ />
-        <FinalCTA onBookNow={openModal} />
+        <FinalCTA onBookNow={openBooking} />
       </main>
 
       <Footer />
-
-      <BookingModal isOpen={modalOpen} onClose={closeModal} />
-      <StickyBar onBookNow={openModal} />
+      <StickyBar onBookNow={openBooking} />
     </>
   );
 }
