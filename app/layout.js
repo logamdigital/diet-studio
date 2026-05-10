@@ -9,6 +9,12 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 export const metadata = {
   title: 'Diet Studio — Book a 1:1 Personal Diet Consultation with Dt. Sushant',
   description:

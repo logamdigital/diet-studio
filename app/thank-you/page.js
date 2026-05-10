@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import { CheckCircle2, Calendar, MessageCircle, Clock } from 'lucide-react';
+import { CheckCircle2, MessageCircle, Clock, PhoneCall } from 'lucide-react';
 
 function ThankYouContent() {
   const params = useSearchParams();
@@ -21,7 +21,7 @@ function ThankYouContent() {
             {name ? `You're all set, ${name}!` : "You're all set!"}
           </h1>
           <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-            Your payment is confirmed and your consultation slot is booked with Dt. Sushant.
+            Payment confirmed! Dt. Sushant's team will reach out to schedule your 30-minute consultation.
           </p>
         </div>
 
@@ -31,21 +31,21 @@ function ThankYouContent() {
 
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 bg-brand-purple/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-              <Calendar size={15} className="text-brand-purple" />
+              <MessageCircle size={15} className="text-brand-purple" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-800">Check your calendar invite</p>
-              <p className="text-xs text-gray-500 mt-0.5">A confirmation email with the meeting link has been sent to you by Calendly.</p>
+              <p className="text-sm font-semibold text-gray-800">WhatsApp confirmation</p>
+              <p className="text-xs text-gray-500 mt-0.5">You'll receive a WhatsApp message from Dt. Sushant's team within a few hours to confirm your session time.</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 bg-brand-purple/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-              <MessageCircle size={15} className="text-brand-purple" />
+              <PhoneCall size={15} className="text-brand-purple" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-800">WhatsApp reminder</p>
-              <p className="text-xs text-gray-500 mt-0.5">Dt. Sushant's team will reach out on WhatsApp before your session.</p>
+              <p className="text-sm font-semibold text-gray-800">Session scheduling</p>
+              <p className="text-xs text-gray-500 mt-0.5">The team will pick a time that works for you — Google Meet or phone call as per your preference.</p>
             </div>
           </div>
 
@@ -55,7 +55,7 @@ function ThankYouContent() {
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-800">Join on time</p>
-              <p className="text-xs text-gray-500 mt-0.5">Your 30-minute session will be on Google Meet or phone call as scheduled.</p>
+              <p className="text-xs text-gray-500 mt-0.5">Your 30-minute 1:1 session with Dt. Sushant will be fully personalised to your goals.</p>
             </div>
           </div>
         </div>
