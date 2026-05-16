@@ -135,7 +135,7 @@ const PCOD_STEPS = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false, price = 99 }) {
+export default function BookingModal({ isOpen, onClose, defaultGoal = '', simple = false, price = 500 }) {
   const steps = simple ? PCOD_STEPS : GENERAL_STEPS;
 
   const [stepIdx, setStepIdx]           = useState(0);

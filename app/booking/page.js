@@ -139,14 +139,84 @@ const PCOD_STEPS = [
   },
 ];
 
+const DIABETES_STEPS = [
+  {
+    id: 'contact', type: 'contact', label: "Let's start with your details", required: true,
+  },
+  {
+    id: 'diabetes_duration', type: 'single',
+    label: 'How long have you been living with diabetes?', required: true,
+    options: [
+      'Newly diagnosed (less than 6 months)',
+      '6 months – 2 years',
+      '2 – 5 years',
+      'More than 5 years',
+    ],
+  },
+  {
+    id: 'symptoms', type: 'multi',
+    label: 'Which symptoms are you currently experiencing?', required: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'High blood sugar / HbA1c above 7',
+      'Fatigue and low energy',
+      'Frequent urination or excessive thirst',
+      'Weight gain or difficulty losing weight',
+      'Nerve tingling or numbness',
+      'Blurred vision',
+    ],
+  },
+  {
+    id: 'medications', type: 'multi',
+    label: 'Are you currently on any diabetes medications?', optional: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Yes, on Metformin',
+      'Yes, on insulin',
+      'Yes, on other oral medications',
+      'Previously on medications but discontinued',
+      'No medications yet',
+    ],
+  },
+  {
+    id: 'life_impact', type: 'multi',
+    label: 'Which areas of your life has diabetes affected?', optional: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Energy levels and daily productivity',
+      'Professional life',
+      'Personal life or relationships',
+      'Mental health and confidence',
+      'Sleep quality',
+      'Not affecting much yet',
+    ],
+  },
+  {
+    id: 'barriers', type: 'multi',
+    label: 'What has been stopping you from reversing diabetes?', optional: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Lack of proper guidance',
+      'Unsure if reversal is possible for me',
+      'Time constraints',
+      "I'm not consistent with diet",
+    ],
+  },
+];
+
 // ─── Booking flow ─────────────────────────────────────────────────────────────
 
 function BookingFlow() {
   const params  = useSearchParams();
   const router  = useRouter();
-  const isPcod  = params.get('pcod') === '1';
-  const price   = isPcod ? 199 : (Number(params.get('price')) || 99);
-  const steps   = isPcod ? PCOD_STEPS : GENERAL_STEPS;
+  const isPcod     = params.get('pcod') === '1';
+  const isDiabetes = params.get('diabetes') === '1';
+  const price      = isPcod ? 500 : (Number(params.get('price')) || 500);
+  const steps      = isPcod ? PCOD_STEPS : isDiabetes ? DIABETES_STEPS : GENERAL_STEPS;
+  const defaultGoal = isDiabetes ? 'Diabetes Management' : 'PCOD / PCOS';
+  const accent = isDiabetes
+    ? { bar: 'bg-brand-teal', btn: 'bg-brand-teal hover:bg-brand-teal/90', ring: 'focus:border-brand-teal', ringWithin: 'focus-within:border-brand-teal', selected: 'border-brand-teal bg-brand-teal/5 text-brand-teal', dot: 'border-brand-teal bg-brand-teal', spin: 'text-brand-teal' }
+    : { bar: 'bg-brand-purple', btn: 'bg-brand-purple hover:bg-brand-purple/90', ring: 'focus:border-brand-purple', ringWithin: 'focus-within:border-brand-purple', selected: 'border-brand-purple bg-brand-purple/5 text-brand-purple', dot: 'border-brand-purple bg-brand-purple', spin: 'text-brand-purple' };
 
   const [stepIdx, setStepIdx]           = useState(0);
   const [phase, setPhase]               = useState('form'); // 'form' | 'paying'
@@ -228,15 +298,16 @@ function BookingFlow() {
             }),
           });
           if (verifyRes.ok) {
-            fbq('Purchase', { value: p, currency: 'INR', content_name: data.goal || cf.goal || 'PCOD / PCOS' });
+            fbq('Purchase', { value: p, currency: 'INR', content_name: data.goal || cf.goal || defaultGoal });
             sendWebhook({
               event:               'purchase',
               name:                data.name,
               phone:               '+91' + data.phone,
               email:               data.email,
-              goal:                data.goal || cf.goal || 'PCOD / PCOS',
+              goal:                data.goal || cf.goal || defaultGoal,
               conditions:          data.conditions || '',
-              pcos_duration:       cf.pcos_duration || '',
+              pcos_duration:       cf.pcos_duration     || '',
+              diabetes_duration:   cf.diabetes_duration || '',
               symptoms:            (cf.symptoms    || []).join(', '),
               medications:         (cf.medications  || []).join(', '),
               life_impact:         (cf.life_impact  || []).join(', '),
@@ -278,7 +349,7 @@ function BookingFlow() {
       setStepIdx((i) => i + 1);
     } else {
       fbq('Lead', {
-        content_name: getValues().goal || customFieldsRef.current.goal || 'PCOD / PCOS',
+        content_name: getValues().goal || customFieldsRef.current.goal || defaultGoal,
         value: priceRef.current,
         currency: 'INR',
       });
@@ -339,7 +410,7 @@ function BookingFlow() {
               placeholder="e.g. Anjali Sharma"
               autoComplete="name"
               autoFocus
-              className={`${inputBase} ${errors.name ? 'border-red-400' : 'border-gray-300 focus:border-brand-purple'}`}
+              className={`${inputBase} ${errors.name ? 'border-red-400' : `border-gray-300 ${accent.ring}`}`}
             />
             {errors.name && <p className="text-red-500 text-sm mt-1.5">{errors.name.message}</p>}
           </div>
@@ -348,7 +419,7 @@ function BookingFlow() {
             <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
               WhatsApp Number <span className="text-red-400">*</span>
             </label>
-            <div className={`flex items-center border-b-2 transition ${errors.phone ? 'border-red-400' : 'border-gray-300 focus-within:border-brand-purple'}`}>
+            <div className={`flex items-center border-b-2 transition ${errors.phone ? 'border-red-400' : `border-gray-300 ${accent.ringWithin}`}`}>
               <span className="text-gray-400 text-[16px] pr-2 pb-3 shrink-0">+91</span>
               <input
                 {...register('phone', {
@@ -375,7 +446,7 @@ function BookingFlow() {
               type="email"
               placeholder="yourname@gmail.com"
               autoComplete="email"
-              className={`${inputBase} ${errors.email ? 'border-red-400' : 'border-gray-300 focus:border-brand-purple'}`}
+              className={`${inputBase} ${errors.email ? 'border-red-400' : `border-gray-300 ${accent.ring}`}`}
             />
             {errors.email && <p className="text-red-500 text-sm mt-1.5">{errors.email.message}</p>}
           </div>
@@ -392,7 +463,7 @@ function BookingFlow() {
             type={step.type}
             placeholder={step.placeholder}
             autoFocus
-            className={`${inputBase} ${errors[step.id] ? 'border-red-400' : 'border-gray-300 focus:border-brand-purple'}`}
+            className={`${inputBase} ${errors[step.id] ? 'border-red-400' : `border-gray-300 ${accent.ring}`}`}
           />
           {errors[step.id] && <p className="text-red-500 text-sm mt-2">{errors[step.id].message}</p>}
         </div>
@@ -402,7 +473,7 @@ function BookingFlow() {
     if (step.type === 'tel') {
       return (
         <div>
-          <div className={`flex items-center border-b-2 transition ${errors[step.id] ? 'border-red-400' : 'border-gray-300 focus-within:border-brand-purple'}`}>
+          <div className={`flex items-center border-b-2 transition ${errors[step.id] ? 'border-red-400' : `border-gray-300 ${accent.ringWithin}`}`}>
             <span className="text-gray-400 text-[16px] pr-2 pb-3 shrink-0">+91</span>
             <input
               key={step.id}
@@ -432,12 +503,12 @@ function BookingFlow() {
               style={{ touchAction: 'manipulation' }}
               className={`w-full text-left px-4 py-3.5 rounded-2xl border-2 transition-all text-sm font-medium flex items-center gap-3
                 ${selected === option
-                  ? 'border-brand-purple bg-brand-purple/5 text-brand-purple'
+                  ? accent.selected
                   : 'border-gray-200 text-gray-700 active:bg-gray-50'
                 }`}
             >
               <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all
-                ${selected === option ? 'border-brand-purple bg-brand-purple' : 'border-gray-300'}`}>
+                ${selected === option ? accent.dot : 'border-gray-300'}`}>
                 {selected === option && <Check size={11} className="text-white" strokeWidth={3} />}
               </span>
               {option}
@@ -466,12 +537,12 @@ function BookingFlow() {
                 style={{ touchAction: 'manipulation' }}
                 className={`w-full text-left px-4 py-3.5 rounded-2xl border-2 transition-all text-sm font-medium flex items-center gap-3
                   ${checked
-                    ? 'border-brand-purple bg-brand-purple/5 text-brand-purple'
+                    ? accent.selected
                     : 'border-gray-200 text-gray-700 active:bg-gray-50'
                   }`}
               >
                 <span className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all
-                  ${checked ? 'border-brand-purple bg-brand-purple' : 'border-gray-300'}`}>
+                  ${checked ? accent.dot : 'border-gray-300'}`}>
                   {checked && <Check size={11} className="text-white" strokeWidth={3} />}
                 </span>
                 {option}
@@ -495,7 +566,7 @@ function BookingFlow() {
     return (
       <div className="min-h-dvh flex items-center justify-center bg-white px-6">
         <div className="text-center">
-          <Loader2 size={48} className="text-brand-purple animate-spin mx-auto mb-4" />
+          <Loader2 size={48} className={`${accent.spin} animate-spin mx-auto mb-4`} />
           <h2 className="font-semibold text-gray-900 text-lg mb-2">Setting up payment...</h2>
           <p className="text-gray-500 text-sm">You will be redirected to Razorpay in a moment.</p>
           {paymentError && (
@@ -532,7 +603,7 @@ function BookingFlow() {
           </button>
           <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-brand-purple rounded-full transition-all duration-300"
+              className={`h-full ${accent.bar} rounded-full transition-all duration-300`}
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -572,7 +643,7 @@ function BookingFlow() {
             type="button"
             onClick={handleNext}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white font-bold py-4 rounded-2xl text-base transition-all hover:shadow-lg flex items-center justify-center gap-2"
+            className={`w-full ${accent.btn} text-white font-bold py-4 rounded-2xl text-base transition-all hover:shadow-lg flex items-center justify-center gap-2`}
           >
             {stepIdx < steps.length - 1 ? (
               <>{currentStep.optional && !customFields[currentStep.id] ? 'Skip' : 'Continue'} <ArrowRight size={18} /></>

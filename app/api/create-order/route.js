@@ -4,7 +4,7 @@ import Razorpay from 'razorpay';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, phone, email, price = 99 } = body;
+    const { name, phone, email, price = 500 } = body;
 
     if (!name || !phone) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
