@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import StickyBar from '@/components/StickyBar';
 import DiabetesHero from '@/components/diabetes/DiabetesHero';
@@ -13,6 +14,12 @@ import InstaTestimonials from '@/components/sections/InstaTestimonials';
 export default function DiabetesPage() {
   const router = useRouter();
   const openBooking = () => router.push('/booking?diabetes=1');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'ViewContent', { content_name: 'Diabetes Reversal Program Page', content_category: 'Program' });
+    }
+  }, []);
 
   return (
     <>

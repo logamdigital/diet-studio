@@ -3,7 +3,7 @@
 import { ArrowRight, Clock, MapPin, Activity } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-const YOUTUBE_VIDEO_ID = '5qqte5cmnac';
+const YOUTUBE_VIDEO_ID = 'YMrGxw_i3Wg';
 
 const stats = [
   { Icon: Clock,    value: '3 Months',           label: 'Reversal Program' },

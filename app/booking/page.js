@@ -204,18 +204,74 @@ const DIABETES_STEPS = [
   },
 ];
 
+const WEIGHTLOSS_STEPS = [
+  {
+    id: 'contact', type: 'contact', label: "Let's start with your details", required: true,
+  },
+  {
+    id: 'weight_duration', type: 'single',
+    label: 'How long have you been struggling with weight loss?', required: true,
+    options: [
+      'Less than 6 months',
+      '6 months – 2 years',
+      '2 – 5 years',
+      'More than 5 years',
+    ],
+  },
+  {
+    id: 'symptoms', type: 'multi',
+    label: 'Which challenges are you currently facing?', required: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Weight not changing despite dieting',
+      'Constant cravings and hunger',
+      'Stubborn belly fat',
+      'Low energy and fatigue',
+      'Weight comes back after stopping diet',
+      'Hit a weight loss plateau',
+    ],
+  },
+  {
+    id: 'tried_before', type: 'multi',
+    label: 'What have you already tried?', optional: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Calorie-restricted diets',
+      'Keto or low-carb diet',
+      'Gym or cardio workouts',
+      'Generic meal plans / PDFs',
+      'Fasting or intermittent fasting',
+      'Nothing structured yet',
+    ],
+  },
+  {
+    id: 'barriers', type: 'multi',
+    label: 'What has been stopping you?', optional: true,
+    subtitle: 'Select all that apply',
+    options: [
+      'Lack of proper guidance',
+      'Cravings and consistency',
+      'Weight returns after stopping',
+      'No visible results despite trying',
+    ],
+  },
+];
+
 // ─── Booking flow ─────────────────────────────────────────────────────────────
 
 function BookingFlow() {
   const params  = useSearchParams();
   const router  = useRouter();
-  const isPcod     = params.get('pcod') === '1';
-  const isDiabetes = params.get('diabetes') === '1';
-  const price      = isPcod ? 500 : (Number(params.get('price')) || 500);
-  const steps      = isPcod ? PCOD_STEPS : isDiabetes ? DIABETES_STEPS : GENERAL_STEPS;
-  const defaultGoal = isDiabetes ? 'Diabetes Management' : 'PCOD / PCOS';
+  const isPcod       = params.get('pcod') === '1';
+  const isDiabetes   = params.get('diabetes') === '1';
+  const isWeightLoss = params.get('weightloss') === '1';
+  const price        = Number(params.get('price')) || 500;
+  const steps        = isPcod ? PCOD_STEPS : isDiabetes ? DIABETES_STEPS : isWeightLoss ? WEIGHTLOSS_STEPS : GENERAL_STEPS;
+  const defaultGoal  = isDiabetes ? 'Diabetes Management' : isPcod ? 'PCOD / PCOS' : isWeightLoss ? 'Weight Loss' : '';
   const accent = isDiabetes
-    ? { bar: 'bg-brand-teal', btn: 'bg-brand-teal hover:bg-brand-teal/90', ring: 'focus:border-brand-teal', ringWithin: 'focus-within:border-brand-teal', selected: 'border-brand-teal bg-brand-teal/5 text-brand-teal', dot: 'border-brand-teal bg-brand-teal', spin: 'text-brand-teal' }
+    ? { bar: 'bg-brand-teal',   btn: 'bg-brand-teal hover:bg-brand-teal/90',     ring: 'focus:border-brand-teal',   ringWithin: 'focus-within:border-brand-teal',   selected: 'border-brand-teal bg-brand-teal/5 text-brand-teal',     dot: 'border-brand-teal bg-brand-teal',     spin: 'text-brand-teal'   }
+    : isWeightLoss
+    ? { bar: 'bg-orange-500',   btn: 'bg-orange-500 hover:bg-orange-600',         ring: 'focus:border-orange-500',   ringWithin: 'focus-within:border-orange-500',   selected: 'border-orange-500 bg-orange-500/5 text-orange-600',     dot: 'border-orange-500 bg-orange-500',     spin: 'text-orange-500'   }
     : { bar: 'bg-brand-purple', btn: 'bg-brand-purple hover:bg-brand-purple/90', ring: 'focus:border-brand-purple', ringWithin: 'focus-within:border-brand-purple', selected: 'border-brand-purple bg-brand-purple/5 text-brand-purple', dot: 'border-brand-purple bg-brand-purple', spin: 'text-brand-purple' };
 
   const [stepIdx, setStepIdx]           = useState(0);
@@ -285,7 +341,7 @@ function BookingFlow() {
         description: '1:1 Consultation with Dt. Sushant',
         order_id:    order.id,
         prefill:     { name: data.name, email: data.email, contact: data.phone },
-        theme:       { color: '#5E3B87' },
+        theme:       { color: isDiabetes ? '#00A5B5' : isWeightLoss ? '#E07B39' : '#5E3B87' },
         handler: async (response) => {
           const verifyRes = await fetch('/api/verify-payment', {
             method: 'POST',
