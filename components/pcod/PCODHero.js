@@ -59,13 +59,13 @@ export default function PCODHero({ onBookNow }) {
           ref={videoRef}
           className="opacity-0 translate-y-6 transition-all duration-700 flex justify-center mb-10"
         >
-          <div className="w-full max-w-sm" style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 24px 0 rgba(0,0,0,0.10)' }}>
+          <div className="w-full max-w-2xl" style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 24px 0 rgba(0,0,0,0.10)' }}>
             <iframe
               src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
               title="PCOD Reversal Program"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              style={{ width: '100%', aspectRatio: '9/16', border: 0, display: 'block' }}
+              style={{ width: '100%', aspectRatio: '16/9', border: 0, display: 'block' }}
             />
           </div>
         </div>
