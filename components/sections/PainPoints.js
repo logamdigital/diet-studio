@@ -54,7 +54,7 @@ export default function PainPoints() {
             Sound Familiar?
           </span>
           <h2 className="section-heading mb-4">
-            You&apos;ve Probably Tried <span className="text-orange-500">All of This…</span>
+            You&apos;ve Probably Tried <span className="text-brand-purple">All of This…</span>
           </h2>
           <p className="section-subheading max-w-2xl mx-auto">
             If any of these hit home, you're not alone — and it's not your fault.
@@ -71,11 +71,11 @@ export default function PainPoints() {
 
         {/* Bridge */}
         <div className="mt-14 text-center">
-          <div className="inline-block bg-orange-500 text-white rounded-2xl px-8 py-5 max-w-2xl shadow-lg">
+          <div className="inline-block bg-brand-purple text-white rounded-2xl px-8 py-5 max-w-2xl shadow-lg">
             <p className="text-lg font-semibold leading-relaxed">
               The problem is not your body or your willpower.
               <br />
-              <span className="text-orange-100 font-normal">
+              <span className="text-white/75 font-normal">
                 It&apos;s that no one has ever taken the time to understand your unique situation.
               </span>
             </p>
@@ -91,13 +91,13 @@ function PainCard({ pain, delay }) {
   return (
     <div
       ref={ref}
-      className="opacity-0 translate-y-6 transition-all duration-700 bg-white rounded-2xl p-6 border border-beige-100 hover:border-red-100 hover:shadow-md group"
+      className="opacity-0 translate-y-6 transition-all duration-700 bg-white rounded-2xl p-6 border border-gray-200 hover:border-brand-purple/30 hover:shadow-md group"
     >
       <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${pain.color}`}>
         <pain.Icon size={22} />
       </div>
-      <h3 className="font-semibold text-brown-900 text-base mb-2">{pain.title}</h3>
-      <p className="text-brown-600 text-sm leading-relaxed">{pain.desc}</p>
+      <h3 className="font-semibold text-gray-900 text-base mb-2">{pain.title}</h3>
+      <p className="text-gray-600 text-sm leading-relaxed font-light">{pain.desc}</p>
     </div>
   );
 }

@@ -24,8 +24,8 @@ const phases = [
     number: '03',
     title: 'Medicine-Free Reversal',
     desc: 'As your body heals at the root, you gradually come off medications and your PCOD is reversed — not just managed.',
-    iconBg: 'bg-orange-100',
-    iconText: 'text-orange-600',
+    iconBg: 'bg-brand-purple-light',
+    iconText: 'text-brand-purple',
     Icon: ShieldCheck,
   },
 ];
@@ -91,14 +91,14 @@ export default function PCODReversal({ onBookNow }) {
               </div>
 
               {/* Award badge */}
-              <div className="absolute -bottom-5 -right-4 bg-white rounded-2xl p-3 shadow-xl border border-beige-200 flex items-center gap-2.5 max-w-[200px]">
+              <div className="absolute -bottom-5 -right-4 bg-white rounded-2xl p-3 shadow-xl border border-gray-200 flex items-center gap-2.5 max-w-[200px]">
                 <div className="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
                   </svg>
                 </div>
                 <div>
-                  <p className="font-bold text-brown-900 text-xs leading-tight">Pride Bharat Award</p>
+                  <p className="font-bold text-gray-900 text-xs leading-tight">Pride Bharat Award</p>
                   <p className="text-amber-600 text-[10px] mt-0.5">Clinical Excellence 2025</p>
                 </div>
               </div>
@@ -124,7 +124,7 @@ export default function PCODReversal({ onBookNow }) {
 
             {/* 3-phase program */}
             <div>
-              <p className="text-brown-700 font-semibold mb-3">
+              <p className="text-gray-700 font-semibold mb-3">
                 Our Special 3-Phase PCOD Reversal Program:
               </p>
               <div className="space-y-3">
@@ -148,7 +148,7 @@ export default function PCODReversal({ onBookNow }) {
             {/* Included items */}
             <div className="space-y-2">
               {included.map((item, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-brown-700">
+                <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
                   <CheckCircle2 size={16} className="text-brand-teal shrink-0 mt-0.5" />
                   {item}
                 </div>
@@ -156,7 +156,7 @@ export default function PCODReversal({ onBookNow }) {
             </div>
 
             <button onClick={onBookNow} className="btn-primary w-full sm:w-auto">
-              Book PCOD Reversal Consultation
+              Book PCOD Reversal Consultation · ₹500
             </button>
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function PCODReversal({ onBookNow }) {
 
 function PhaseCard({ phase }) {
   return (
-    <div className="flex gap-4 bg-beige-50 rounded-xl p-4 border border-beige-200 hover:border-brand-teal hover:shadow-sm transition-all">
+    <div className="flex gap-4 bg-brand-purple-light/50 rounded-xl p-4 border border-gray-200 hover:border-brand-teal hover:shadow-sm transition-all">
       <div
         className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${phase.iconBg} ${phase.iconText}`}
       >
@@ -177,8 +177,8 @@ function PhaseCard({ phase }) {
         <div className="text-xs font-bold text-brand-purple tracking-widest mb-0.5">
           PHASE {phase.number}
         </div>
-        <div className="font-semibold text-brown-900 text-sm">{phase.title}</div>
-        <div className="text-brown-600 text-xs leading-relaxed mt-0.5">{phase.desc}</div>
+        <div className="font-semibold text-gray-900 text-sm">{phase.title}</div>
+        <div className="text-gray-600 text-xs leading-relaxed mt-0.5 font-light">{phase.desc}</div>
       </div>
     </div>
   );

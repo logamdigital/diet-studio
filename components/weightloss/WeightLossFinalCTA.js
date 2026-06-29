@@ -45,7 +45,7 @@ export default function WeightLossFinalCTA({ onBookNow }) {
               onClick={onBookNow}
               className="bg-white text-orange-500 hover:bg-beige-100 font-bold px-10 py-5 rounded-full text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-1 inline-flex items-center gap-3 group"
             >
-              Get 1:1 Consultation with Dr. Sushant
+              Get 1:1 Consultation · ₹500
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
 

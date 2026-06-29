@@ -7,7 +7,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 const faqs = [
   {
     q: 'What happens during the consultation? What does the diet plan cost?',
-    a: 'During your 30-minute 1:1 session with Dt. Sushant, he will understand your health goals, assess your situation, and explain the personalized plan options with their pricing. There is absolutely no obligation to purchase anything during or after the consultation.',
+    a: 'The consultation booking fee is ₹500. During your 30-minute 1:1 session with Dt. Sushant, he will understand your health goals, assess your situation, and explain the personalized plan options with their pricing. There is absolutely no obligation to purchase anything during or after the consultation.',
   },
   {
     q: 'I am vegetarian. Will the diet plan work for me?',
@@ -47,11 +47,11 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-12 opacity-0 translate-y-6 transition-all duration-700">
-          <span className="inline-block bg-orange-100 text-orange-700 rounded-full px-4 py-1 text-sm font-semibold mb-4">
+          <span className="inline-block bg-brand-purple-light text-brand-purple rounded-full px-4 py-1 text-sm font-semibold mb-4">
             Got Questions?
           </span>
           <h2 className="section-heading mb-4">
-            Frequently Asked <span className="text-orange-500">Questions</span>
+            Frequently Asked <span className="text-brand-purple">Questions</span>
           </h2>
           <p className="section-subheading">
             Everything you need to know before booking your consultation.
@@ -66,18 +66,18 @@ export default function FAQ() {
         </div>
 
         {/* Still have questions */}
-        <div className="mt-10 text-center bg-beige-50 rounded-2xl p-6 border border-beige-200">
+        <div className="mt-10 text-center bg-brand-purple-light rounded-2xl p-6 border border-brand-purple/10">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <MessageCircle size={18} className="text-orange-500" />
-            <p className="text-brown-700 font-medium">Still have questions?</p>
+            <MessageCircle size={18} className="text-brand-purple" />
+            <p className="text-gray-700 font-medium">Still have questions?</p>
           </div>
-          <p className="text-brown-600 text-sm">
+          <p className="text-gray-600 text-sm">
             Reach out on WhatsApp — we typically reply within 30 minutes.{' '}
             <a
               href="https://wa.me/919999999999"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-500 font-semibold hover:underline"
+              className="text-brand-purple font-semibold hover:underline"
             >
               Chat on WhatsApp
             </a>
@@ -94,22 +94,22 @@ function FAQItem({ faq, delay }) {
 
   return (
     <div ref={ref} className="opacity-0 translate-y-4 transition-all duration-600">
-      <div className={`border rounded-xl overflow-hidden transition-all ${open ? 'border-orange-300 shadow-md' : 'border-beige-200'}`}>
+      <div className={`border rounded-xl overflow-hidden transition-all ${open ? 'border-brand-purple/40 shadow-md' : 'border-gray-200'}`}>
         <button
           onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between gap-4 p-5 text-left bg-white hover:bg-beige-50 transition-colors"
+          className="w-full flex items-center justify-between gap-4 p-5 text-left bg-white hover:bg-brand-purple-light/40 transition-colors"
         >
-          <span className="font-semibold text-brown-900 text-sm leading-relaxed pr-2">
+          <span className="font-semibold text-gray-900 text-sm leading-relaxed pr-2">
             {faq.q}
           </span>
           <ChevronDown
             size={18}
-            className={`text-orange-500 shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+            className={`text-brand-purple shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
           />
         </button>
         {open && (
-          <div className="px-5 pb-5 bg-beige-50 border-t border-beige-200">
-            <p className="text-brown-700 text-sm leading-relaxed pt-4 font-light">{faq.a}</p>
+          <div className="px-5 pb-5 bg-brand-purple-light/40 border-t border-gray-200">
+            <p className="text-gray-700 text-sm leading-relaxed pt-4 font-light">{faq.a}</p>
           </div>
         )}
       </div>

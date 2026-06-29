@@ -1,12 +1,46 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { CheckCircle2, MessageCircle, Clock, PhoneCall } from 'lucide-react';
 
 function ThankYouContent() {
   const params = useSearchParams();
   const name   = params.get('name') || '';
+
+  // Fire the Facebook Purchase event here — firing it on the booking page
+  // before redirecting cancelled the pixel beacon mid-flight. We pass the
+  // payment id (pid) and guard with sessionStorage so a refresh won't double-count.
+  // The pixel loads "afterInteractive", so fbq may not exist yet when this effect
+  // runs — poll briefly until it's ready instead of dropping the event.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const value = Number(params.get('value')) || 0;
+    const goal  = params.get('goal') || '';
+    const pid   = params.get('pid') || '';
+    const key   = 'purchase_fired_' + (pid || 'na');
+    if (pid && sessionStorage.getItem(key)) return;
+
+    const fire = () => {
+      if (typeof window.fbq !== 'function') return false;
+      window.fbq(
+        'track',
+        'Purchase',
+        { value, currency: 'INR', content_name: goal },
+        pid ? { eventID: pid } : undefined
+      );
+      if (pid) sessionStorage.setItem(key, '1');
+      return true;
+    };
+
+    if (fire()) return;
+    let tries = 0;
+    const t = setInterval(() => {
+      tries += 1;
+      if (fire() || tries >= 40) clearInterval(t); // wait up to ~10s for the pixel
+    }, 250);
+    return () => clearInterval(t);
+  }, [params]);
 
   return (
     <main className="min-h-dvh flex flex-col items-center justify-center bg-brand-purple-light px-4 py-10">

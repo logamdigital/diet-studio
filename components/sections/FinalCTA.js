@@ -11,51 +11,51 @@ export default function FinalCTA({ onBookNow }) {
       <div className="max-w-4xl mx-auto">
         <div
           ref={ref}
-          className="opacity-0 translate-y-6 transition-all duration-700 bg-gradient-to-br from-brown-900 via-brown-800 to-orange-700 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
+          className="opacity-0 translate-y-6 transition-all duration-700 bg-gradient-to-br from-brand-purple via-[#4a2d6f] to-[#3a1f5c] rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-brand-teal/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-60 h-60 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
               <Clock size={14} />
               <span>Limited Slots Available This Week</span>
             </div>
 
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
               Your Health Journey Starts with{' '}
-              <span className="text-orange-400">One Decision</span>
+              <span className="text-brand-teal">One Decision</span>
             </h2>
 
-            <p className="text-beige-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4 font-light">
+            <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4 font-light">
               Stop spending another month guessing what to eat or following diets that were not
               made for your body.
             </p>
 
-            <p className="text-beige-200 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-light">
-              Get expert eyes on your health and a clear, personalized path forward.
+            <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-light">
+              Get expert eyes on your health and a clear, personalized path forward — for just ₹500.
             </p>
 
             {/* CTA */}
             <button
               onClick={onBookNow}
-              className="bg-orange-500 hover:bg-orange-400 text-white font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-2xl hover:shadow-orange-500/30 hover:-translate-y-1 inline-flex items-center gap-3 group"
+              className="bg-white text-brand-purple hover:bg-brand-purple-light font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-2xl hover:shadow-white/20 hover:-translate-y-1 inline-flex items-center gap-3 group"
             >
-              Get 1:1 Consultation with Dt. Sushant
+              Get 1:1 Consultation · ₹500
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
             {/* Trust row */}
-            <div className="flex flex-wrap justify-center gap-6 mt-6 text-sm text-beige-300">
+            <div className="flex flex-wrap justify-center gap-6 mt-6 text-sm text-white/70">
               <span className="flex items-center gap-1.5">
-                <Lock size={14} className="text-orange-400" /> Secure payment
+                <Lock size={14} className="text-brand-teal" /> Secure payment
               </span>
               <span className="flex items-center gap-1.5">
-                <Shield size={14} className="text-orange-400" /> No hidden charges
+                <Shield size={14} className="text-brand-teal" /> No hidden charges
               </span>
               <span className="flex items-center gap-1.5">
-                <Clock size={14} className="text-orange-400" /> Choose your slot
+                <Clock size={14} className="text-brand-teal" /> Choose your slot
               </span>
             </div>
 
@@ -67,8 +67,8 @@ export default function FinalCTA({ onBookNow }) {
                 ['30 Min', 'Expert Session'],
               ].map(([val, label]) => (
                 <div key={label} className="text-center">
-                  <p className="text-orange-400 font-bold text-2xl font-heading">{val}</p>
-                  <p className="text-beige-300 text-xs">{label}</p>
+                  <p className="text-brand-teal font-bold text-2xl font-heading">{val}</p>
+                  <p className="text-white/60 text-xs">{label}</p>
                 </div>
               ))}
             </div>

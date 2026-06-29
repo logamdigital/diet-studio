@@ -42,18 +42,18 @@ const stats = [
 
 export default function TrustBar() {
   return (
-    <section className="bg-brown-900 py-10">
+    <section className="bg-brand-purple py-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center">
-                <stat.Icon size={20} className="text-orange-400" />
+              <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center">
+                <stat.Icon size={20} className="text-brand-teal" />
               </div>
-              <p className="text-3xl font-bold text-orange-400 font-heading">
+              <p className="text-3xl font-bold text-brand-teal font-heading">
                 <CountUp end={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="text-beige-100 text-sm font-medium">{stat.label}</p>
+              <p className="text-white/90 text-sm font-medium">{stat.label}</p>
             </div>
           ))}
         </div>

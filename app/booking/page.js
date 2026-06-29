@@ -354,7 +354,6 @@ function BookingFlow() {
             }),
           });
           if (verifyRes.ok) {
-            fbq('Purchase', { value: p, currency: 'INR', content_name: data.goal || cf.goal || defaultGoal });
             sendWebhook({
               event:               'purchase',
               name:                data.name,
@@ -375,7 +374,15 @@ function BookingFlow() {
               timestamp:           new Date().toISOString(),
               ...getUtmParams(),
             });
-            const qs = new URLSearchParams({ name: data.name, ...(data.email ? { email: data.email } : {}) });
+            // Purchase fires on /thank-you (not here) so the pixel beacon isn't
+            // cancelled by this navigation. pid is passed for de-duplication.
+            const qs = new URLSearchParams({
+              name: data.name,
+              ...(data.email ? { email: data.email } : {}),
+              value: String(p),
+              goal: data.goal || cf.goal || defaultGoal,
+              pid: response.razorpay_payment_id,
+            });
             window.location.href = '/thank-you?' + qs.toString();
           } else {
             setPaymentError('Payment verification failed. Please contact support.');

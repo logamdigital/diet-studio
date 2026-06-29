@@ -49,7 +49,7 @@ export default function DiabetesHero({ onBookNow }) {
             onClick={onBookNow}
             className="bg-brand-teal hover:bg-brand-teal/90 text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-flex items-center gap-2 group"
           >
-            Get 1:1 Consultation with Dt. Sushant
+            Get 1:1 Consultation · ₹500
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

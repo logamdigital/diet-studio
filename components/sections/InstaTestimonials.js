@@ -39,7 +39,7 @@ export default function InstaTestimonials() {
       <div className="max-w-6xl mx-auto px-4 text-center mb-10">
         <div className="inline-flex items-center gap-2 bg-white border border-purple-200 rounded-2xl px-5 py-2.5 shadow-sm mb-6">
           <IgIcon size={20} gradId="ig-badge" />
-          <span className="font-semibold text-brown-900 text-sm">Real Client Stories</span>
+          <span className="font-semibold text-gray-900 text-sm">Real Client Stories</span>
         </div>
 
         <h2 className="section-heading mb-3">

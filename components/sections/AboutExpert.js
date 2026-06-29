@@ -47,24 +47,24 @@ export default function AboutExpert() {
           {/* ── Content ───────────────────────────────────────────── */}
           <div ref={rightRef} className="opacity-0 translate-y-6 transition-all duration-700">
 
-            <span className="inline-block bg-orange-100 text-orange-700 rounded-full px-4 py-1 text-sm font-semibold mb-4">
+            <span className="inline-block bg-brand-purple-light text-brand-purple rounded-full px-4 py-1 text-sm font-semibold mb-4">
               Meet Your Dietitian
             </span>
 
-            <p className="text-orange-600 font-semibold text-base mb-1">Dt. Sushant Thakur</p>
+            <p className="text-brand-purple font-semibold text-base mb-1">Dt. Sushant Thakur</p>
             <h2 className="section-heading mb-6">
               A Dietitian Who Understands{' '}
-              <span className="text-orange-500">Hormones, Not Just Calories</span>
+              <span className="text-brand-teal">Hormones, Not Just Calories</span>
             </h2>
 
-            <p className="text-brown-700 leading-relaxed mb-5 font-light">
+            <p className="text-gray-600 leading-relaxed mb-5 font-light">
               Hi! I am Dt. Sushant Thakur, founder of Diet Studio. Over 5+ years I have worked with
               hundreds of women across India dealing with PCOD, insulin resistance, and hormonal
               imbalances. I understand how frustrating it is to follow medical advice and still see
               no change.
             </p>
 
-            <p className="text-brown-700 leading-relaxed mb-8 font-light">
+            <p className="text-gray-600 leading-relaxed mb-8 font-light">
               My approach focuses on the root cause: correcting insulin sensitivity, healing gut
               health, and reducing inflammation — so your body can regulate its own hormones again,
               without depending on medicines indefinitely.
@@ -73,8 +73,8 @@ export default function AboutExpert() {
             {/* Credentials */}
             <div className="space-y-3 mb-8">
               {credentials.map((cred, i) => (
-                <div key={i} className="flex items-center gap-3 text-brown-800">
-                  <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 shrink-0">
+                <div key={i} className="flex items-center gap-3 text-gray-800">
+                  <div className="w-9 h-9 bg-brand-purple-light rounded-lg flex items-center justify-center text-brand-purple shrink-0">
                     <cred.Icon size={18} />
                   </div>
                   <span className="text-sm font-medium">{cred.text}</span>
@@ -83,7 +83,7 @@ export default function AboutExpert() {
             </div>
 
             {/* Quote */}
-            <blockquote className="border-l-4 border-orange-400 pl-5 py-2 text-brown-700 bg-beige-50 rounded-r-xl italic font-light">
+            <blockquote className="border-l-4 border-brand-teal pl-5 py-2 text-gray-600 bg-brand-purple-light rounded-r-xl italic font-light">
               "I don&apos;t believe in one-size-fits-all diets. Your body is unique, your food is
               unique, and your plan should be too."
             </blockquote>

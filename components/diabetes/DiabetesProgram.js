@@ -120,7 +120,7 @@ export default function DiabetesProgram({ onBookNow }) {
             onClick={onBookNow}
             className="bg-brand-teal hover:bg-brand-teal/90 text-white font-bold px-8 py-3.5 rounded-full text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto"
           >
-            Get 1:1 Consultation with Dt. Sushant
+            Get 1:1 Consultation · ₹500
           </button>
         </div>
 

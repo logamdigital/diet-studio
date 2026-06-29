@@ -6,9 +6,9 @@ import Hero from '@/components/sections/Hero';
 import TrustBar from '@/components/sections/TrustBar';
 import PainPoints from '@/components/sections/PainPoints';
 import Solution from '@/components/sections/Solution';
+import Services from '@/components/sections/Services';
 import PCODReversal from '@/components/sections/PCODReversal';
 import AboutExpert from '@/components/sections/AboutExpert';
-import GoogleReviews from '@/components/sections/GoogleReviews';
 import InstaTestimonials from '@/components/sections/InstaTestimonials';
 import Offer from '@/components/sections/Offer';
 import HowItWorks from '@/components/sections/HowItWorks';
@@ -30,9 +30,9 @@ export default function HomePage() {
         <TrustBar />
         <PainPoints />
         <Solution onBookNow={openBooking} />
+        <Services onBookNow={openBooking} />
         <PCODReversal onBookNow={openBooking} />
         <AboutExpert />
-        <GoogleReviews />
         <InstaTestimonials />
         <HowItWorks onBookNow={openBooking} />
         <Offer onBookNow={openBooking} />

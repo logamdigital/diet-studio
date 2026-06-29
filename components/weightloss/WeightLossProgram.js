@@ -120,7 +120,7 @@ export default function WeightLossProgram({ onBookNow }) {
             onClick={onBookNow}
             className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-full text-sm transition-all hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto"
           >
-            Get 1:1 Consultation with Dr. Sushant
+            Get 1:1 Consultation · ₹500
           </button>
         </div>
 

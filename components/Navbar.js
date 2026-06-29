@@ -15,7 +15,7 @@ export default function Navbar({ onBookNow }) {
 
   const navLinks = [
     { label: 'Why Diet Studio', href: '#solution' },
-    { label: 'Results', href: '#testimonials' },
+    { label: 'Programs', href: '#services' },
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'FAQ', href: '#faq' },
   ];
@@ -31,14 +31,14 @@ export default function Navbar({ onBookNow }) {
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-orange-500 rounded-full flex items-center justify-center">
+          <div className="w-9 h-9 bg-brand-purple rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-sm">DS</span>
           </div>
           <div>
-            <span className={`font-heading font-bold text-lg leading-none block transition-colors ${scrolled ? 'text-brown-900' : 'text-brown-900'}`}>
+            <span className="font-heading font-bold text-lg leading-none block transition-colors text-gray-900">
               Diet Studio
             </span>
-            <span className="text-xs text-brown-500 font-normal leading-none">by Dt. Sushant Thakur</span>
+            <span className="text-xs text-gray-500 font-normal leading-none">by Dt. Sushant Thakur</span>
           </div>
         </a>
 
@@ -48,7 +48,7 @@ export default function Navbar({ onBookNow }) {
             <a
               key={link.href}
               href={link.href}
-              className="text-brown-700 hover:text-orange-500 font-medium text-sm transition-colors"
+              className="text-gray-600 hover:text-brand-purple font-medium text-sm transition-colors"
             >
               {link.label}
             </a>
@@ -59,15 +59,15 @@ export default function Navbar({ onBookNow }) {
         <div className="hidden md:block">
           <button
             onClick={onBookNow}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            className="bg-brand-purple hover:bg-brand-purple/90 text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
           >
-            Get 1:1 Consultation with Dt. Sushant
+            Get 1:1 Consultation · ₹500
           </button>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-brown-900 p-1"
+          className="md:hidden text-gray-900 p-1"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -77,13 +77,13 @@ export default function Navbar({ onBookNow }) {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-beige-200 shadow-lg">
+        <div className="md:hidden bg-white border-t border-brand-purple/10 shadow-lg">
           <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-brown-700 hover:text-orange-500 font-medium py-1"
+                className="text-gray-600 hover:text-brand-purple font-medium py-1"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
@@ -91,9 +91,9 @@ export default function Navbar({ onBookNow }) {
             ))}
             <button
               onClick={() => { setMenuOpen(false); onBookNow(); }}
-              className="bg-orange-500 text-white font-semibold py-3 rounded-full mt-2"
+              className="bg-brand-purple text-white font-semibold py-3 rounded-full mt-2"
             >
-              Get 1:1 Consultation with Dt. Sushant
+              Get 1:1 Consultation · ₹500
             </button>
           </div>
         </div>
