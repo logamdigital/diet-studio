@@ -3,7 +3,14 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, ArrowRight, Check, Loader2, Lock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Loader2, Lock, BookOpen, CalendarDays, UtensilsCrossed, Stethoscope } from 'lucide-react';
+
+const PCOD_INCLUDED = [
+  { Icon: Stethoscope,     text: '1:1 Consultation with Dt. Sushant' },
+  { Icon: BookOpen,        text: 'PCOD Reversal E-Book' },
+  { Icon: CalendarDays,    text: '7-Week Diet Charts — Veg & Non-Veg' },
+  { Icon: UtensilsCrossed, text: 'Healthy PCOD-Friendly Recipes' },
+];
 
 const WEBHOOK_URL     = process.env.NEXT_PUBLIC_WEBHOOK_URL;
 const CRM_WEBHOOK_URL = process.env.NEXT_PUBLIC_CRM_WEBHOOK_URL;
@@ -696,6 +703,25 @@ function BookingFlow() {
           )}
 
           {renderField()}
+
+          {/* What you get — shown on the final step, right before payment */}
+          {isPcod && stepIdx === steps.length - 1 && (
+            <div className="mt-8 bg-brand-purple/5 border border-brand-purple/15 rounded-2xl p-5">
+              <p className="text-xs font-semibold text-brand-purple uppercase tracking-wide mb-4">
+                What you get when you join
+              </p>
+              <div className="space-y-3">
+                {PCOD_INCLUDED.map(({ Icon, text }) => (
+                  <div key={text} className="flex items-center gap-3 text-sm text-gray-700">
+                    <span className="w-8 h-8 rounded-lg bg-brand-purple/10 text-brand-purple flex items-center justify-center shrink-0">
+                      <Icon size={16} />
+                    </span>
+                    <span className="font-medium">{text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

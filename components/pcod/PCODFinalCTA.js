@@ -1,12 +1,19 @@
 'use client';
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import { ArrowRight, CheckCircle2, Wifi, Activity } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Wifi, Activity, BookOpen, CalendarDays, UtensilsCrossed, Stethoscope } from 'lucide-react';
 
 const trustPoints = [
   { Icon: Activity,     text: 'BCA Analysis Included' },
   { Icon: CheckCircle2, text: 'Personalised Plan for Your Body' },
   { Icon: Wifi,         text: 'Online Available' },
+];
+
+const included = [
+  { Icon: Stethoscope,      text: '1:1 Consultation with Dt. Sushant' },
+  { Icon: BookOpen,         text: 'PCOD Reversal E-Book' },
+  { Icon: CalendarDays,     text: '7-Week Diet Charts (Veg & Non-Veg)' },
+  { Icon: UtensilsCrossed,  text: 'Healthy PCOD-Friendly Recipes' },
 ];
 
 export default function PCODFinalCTA({ onBookNow }) {
@@ -47,6 +54,24 @@ export default function PCODFinalCTA({ onBookNow }) {
               Get 1:1 Consultation · ₹500
               <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </button>
+
+            {/* What you get */}
+            <div className="mt-10 max-w-2xl mx-auto">
+              <p className="text-white/60 text-xs font-semibold uppercase tracking-widest mb-4">
+                Everything you get when you join
+              </p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {included.map(({ Icon, text }) => (
+                  <div
+                    key={text}
+                    className="flex flex-col items-center gap-2 bg-white/10 border border-white/15 rounded-2xl px-4 py-4 text-center"
+                  >
+                    <Icon size={22} className="text-brand-teal" />
+                    <span className="text-white/90 text-xs font-medium leading-snug">{text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Micro trust row */}
             <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-white/70">
