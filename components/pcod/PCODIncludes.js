@@ -24,8 +24,8 @@ const includes = [
     Icon: CalendarDays,
     iconBg: 'bg-brand-teal-light',
     iconText: 'text-brand-teal',
-    title: '7-Week Diet Charts',
-    desc: 'Structured, week-by-week meal plans designed for PCOD reversal — available for both Vegetarian and Non-Vegetarian eaters, so you follow a plan that fits your lifestyle.',
+    title: '7-Day Diet Charts',
+    desc: 'Structured, day-by-day meal plans designed for PCOD reversal — available for both Vegetarian and Non-Vegetarian eaters, so you follow a plan that fits your lifestyle.',
     tag: 'Veg & Non-Veg',
     badges: [
       { Icon: Leaf, label: 'Vegetarian' },

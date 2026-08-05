@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, Check, Loader2, Lock, BookOpen, CalendarDays, Ut
 const PCOD_INCLUDED = [
   { Icon: Stethoscope,     text: '1:1 Consultation with Dt. Sushant' },
   { Icon: BookOpen,        text: 'PCOD Reversal E-Book' },
-  { Icon: CalendarDays,    text: '7-Week Diet Charts — Veg & Non-Veg' },
+  { Icon: CalendarDays,    text: '7-Day Diet Charts — Veg & Non-Veg' },
   { Icon: UtensilsCrossed, text: 'Healthy PCOD-Friendly Recipes' },
 ];
 
