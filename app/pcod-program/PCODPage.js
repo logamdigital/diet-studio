@@ -35,6 +35,18 @@ export default function PCODPage() {
         <PCODFinalCTA    onBookNow={openBooking} />
       </main>
 
+      <p className="py-4 text-center text-xs text-gray-400 bg-white">
+        Powered by{' '}
+        <a
+          href="https://logamdigital.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-brand-purple font-semibold hover:underline"
+        >
+          Logam Digital
+        </a>
+      </p>
+
       <StickyBar onBookNow={openBooking} />
     </>
   );

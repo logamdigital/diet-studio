@@ -96,6 +96,18 @@ export default function Footer() {
             Made with <Heart size={12} className="text-brand-teal mx-0.5" fill="currentColor" /> for healthier India
           </p>
         </div>
+
+        <p className="text-center text-xs text-white/55 mt-4">
+          Powered by{' '}
+          <a
+            href="https://logamdigital.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:underline"
+          >
+            Logam Digital
+          </a>
+        </p>
       </div>
     </footer>
   );
