@@ -2,7 +2,7 @@ import { Instagram, Facebook, Youtube, MessageCircle, Heart } from 'lucide-react
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-purple text-white/85 pt-12 pb-6 px-4">
+    <footer className="bg-brand-purple text-white/85 pt-12 pb-24 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* Brand */}

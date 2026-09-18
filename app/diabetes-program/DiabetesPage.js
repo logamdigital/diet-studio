@@ -33,7 +33,7 @@ export default function DiabetesPage() {
         <DiabetesFinalCTA    onBookNow={openBooking} />
       </main>
 
-      <p className="py-4 text-center text-xs text-gray-400 bg-white">
+      <p className="pt-4 pb-24 text-center text-xs text-gray-400 bg-white">
         Powered by{' '}
         <a
           href="https://logamdigital.com"
